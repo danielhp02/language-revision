@@ -1,0 +1,20 @@
+{
+  "words": [
+    {
+      "frenchGender": "m",
+      "english": "cat",
+      "germanGender": "f",
+      "french": "chat",
+      "german": "katze",
+      "catergories": ["animals", "pets"]
+    },
+    {
+      "frenchGender": "m",
+      "english": "dog",
+      "germanGender": "m",
+      "french": "chien",
+      "german": "hund",
+      "catergories": ["animals", "pets"]
+    }
+  ]
+}
