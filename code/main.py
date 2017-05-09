@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from random import randint, shuffle
+from random import randint, sample
 import json
 import os
 import sys
@@ -18,7 +18,7 @@ def load_words():
         with open(words_filepath, 'r') as input:
             word_dict = json.load(input)["words"]
             for w in word_dict:
-                word = add_word(w["english"], w["german"], w["french"], w["germanGender"], w["frenchGender"])
+                word = add_word(w["english"], w["german"], w["french"], w["germanGender"], w["frenchGender"], w["catergories"])
     except FileNotFoundError: # Create file if not found
         print("Failed to find file '", words_filepath, "'.")
         with open(words_filepath, 'w'):
@@ -62,20 +62,50 @@ def check_word_exists(word, language=None):
     else:
         return False
 
-def add_word(english, german, french, germanGender, frenchGender):
+def add_word(english, german, french, germanGender, frenchGender, catergories):
     global words
     # check_word_exists(english)
-    words.append(objects.Word(english, german, french, germanGender, frenchGender, catergory))
+    words.append(objects.Word(english, german, french, germanGender, frenchGender, catergories))
 
 score = 0
 
 load_words()
 
-def randomise(length):
-    indexes = list(range(length))
-    return shuffle(indexes)
+def quiz():
+    global score, words
 
-deck = randomise(len(words))
+    deck = randomise(len(words))
+
+    while True:
+        try:
+            index = deck.pop()
+        except IndexError:
+            score = float(score/2)
+            highestPossibleScore = str(len(words))
+            print("\nRound over! Your score that round was " + '%g'%(score) + " out of " + highestPossibleScore + ".\n")
+            randomise(len(words))
+            score = 0
+            return
+        textIn = input("What is the gender of '" + words[index].german + "'? ").lower()
+        if textIn == 'exit':
+            return
+        elif textIn == words[index].germanGender:
+            print("Correct!")
+            score += 1 # Half point, 1 so it's not adding floats
+        else:
+            print("Incorrect! The answer was " + words[index].germanGender + ".")
+        textIn = ''
+        textIn = input("What is that in English? ").lower()
+        if textIn == "exit":
+            return
+        elif textIn == str(words[index].english):
+            print("Correct!")
+            score += 1 # Half point
+        else:
+            print("Incorrect! The answer was " + words[index].english + ".")
+
+def randomise(length):
+    return sample(range(length), 2)
 
 running = True
 while running:
@@ -86,37 +116,15 @@ while running:
         french = input("What is the word in French? ").lower()
         germanGender = input("What is the gender of that word in German? ").lower()
         frenchGender = input("What is the gender of that word in French? ").lower()
-        catergory = list(input("What catergory is this in? ").lower())
+        catergories = input("What catergories are this word in? ").lower().split()
 
-        add_word(english, german, french, germanGender, frenchGender, catergory)
+        add_word(english, german, french, germanGender, frenchGender, catergories)
+
+    elif action == 'quiz me':
+        quiz()
 
     elif action == 'save words':
         save_words()
 
     elif action == 'exit':
         sys.exit()
-    # try:
-    #     index = deck.pop()
-    # except IndexError:
-    #     print("\n\nRound over! Your score that round was " + str(float(score)/2) + " out of " + str(float(len(answer))) + ".\n\n")
-    #     randomise()
-    #     score = 0
-    # textIn = input("What is the gender of '" + germanWords[index] + "'? ").lower()
-    # if textIn == 'exit':
-    #     running = False
-    #     break
-    # elif textIn == answer[index]:
-    #     print("Correct!")
-    #     score += 1 # Half mark, 1 so it's not adding floats
-    # else:
-    #     print("Incorrect! The answer was " + answer[index] + ".")
-    # textIn = ''
-    # textIn = input("What is that in English? ").lower()
-    # if textIn == "exit":
-    #     running = False
-    #     break
-    # elif textIn == str(englishWords[index]):
-    #     print("Correct!")
-    #     score += 1 # Half point
-    # else:
-    #     print("Incorrect! The answer was " + englishWords[index] + ".")

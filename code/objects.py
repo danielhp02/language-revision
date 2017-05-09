@@ -8,6 +8,9 @@ class Word(object):
 
         self.catergory = catergory
 
-class Question(object):
+class Quiz(object):
     def __init__(self):
+        pass
+
+    def ask(self, catergory, task):
         pass

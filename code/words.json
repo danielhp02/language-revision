@@ -1,20 +1,26 @@
 {
   "words": [
     {
-      "frenchGender": "m",
-      "english": "cat",
-      "germanGender": "f",
+      "catergories": [
+        "animals",
+        "pets"
+      ],
       "french": "chat",
       "german": "katze",
-      "catergories": ["animals", "pets"]
+      "english": "cat",
+      "germanGender": "f",
+      "frenchGender": "m"
     },
     {
-      "frenchGender": "m",
-      "english": "dog",
-      "germanGender": "m",
+      "catergories": [
+        "animals",
+        "pets"
+      ],
       "french": "chien",
       "german": "hund",
-      "catergories": ["animals", "pets"]
+      "english": "dog",
+      "germanGender": "m",
+      "frenchGender": "m"
     }
   ]
 }
