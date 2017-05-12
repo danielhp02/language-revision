@@ -71,7 +71,7 @@ score = 0
 
 load_words()
 
-def quiz():
+def quiz(language):
     global score, words
 
     deck = randomise(len(words))
@@ -120,8 +120,9 @@ while running:
 
         add_word(english, german, french, germanGender, frenchGender, catergories)
 
-    elif action == 'quiz me':
-        quiz()
+    elif action.split()[0] == 'quiz':
+        if len(action.split()) == 1 or action.split()[1] == 'general':
+            quiz()
 
     elif action == 'save words':
         save_words()
