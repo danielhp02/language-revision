@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from random import randint, sample
+from random import randint
 import json
 import os
 import sys
@@ -67,45 +67,19 @@ def add_word(english, german, french, germanGender, frenchGender, catergories):
     # check_word_exists(english)
     words.append(objects.Word(english, german, french, germanGender, frenchGender, catergories))
 
-score = 0
+def remove_duplicates(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
 
 load_words()
 
-def quiz(language):
-    global score, words
+catergories = []
+for c in words:
+    catergories.append(c.catergories)
+catergories = remove_duplicates([y for x in catergories for y in x])
 
-    deck = randomise(len(words))
-
-    while True:
-        try:
-            index = deck.pop()
-        except IndexError:
-            score = float(score/2)
-            highestPossibleScore = str(len(words))
-            print("\nRound over! Your score that round was " + '%g'%(score) + " out of " + highestPossibleScore + ".\n")
-            randomise(len(words))
-            score = 0
-            return
-        textIn = input("What is the gender of '" + words[index].german + "'? ").lower()
-        if textIn == 'exit':
-            return
-        elif textIn == words[index].germanGender:
-            print("Correct!")
-            score += 1 # Half point, 1 so it's not adding floats
-        else:
-            print("Incorrect! The answer was " + words[index].germanGender + ".")
-        textIn = ''
-        textIn = input("What is that in English? ").lower()
-        if textIn == "exit":
-            return
-        elif textIn == str(words[index].english):
-            print("Correct!")
-            score += 1 # Half point
-        else:
-            print("Incorrect! The answer was " + words[index].english + ".")
-
-def randomise(length):
-    return sample(range(length), 2)
+quiz = objects.Quiz(words)
 
 running = True
 while running:
@@ -121,8 +95,14 @@ while running:
         add_word(english, german, french, germanGender, frenchGender, catergories)
 
     elif action.split()[0] == 'quiz':
-        if len(action.split()) == 1 or action.split()[1] == 'general':
-            quiz()
+        print("eh")
+        if len(action.split()) in [1,2]:
+            print("More info is needed to start a quiz.")
+        elif action.split()[1] == 'french' and action.split()[2] in catergories:
+            print('eh')
+            quiz.quiz('french')
+        elif action.split()[1] == 'german' and action.split()[2] in catergories:
+            quiz.quiz('german')
 
     elif action == 'save words':
         save_words()
