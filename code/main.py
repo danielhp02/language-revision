@@ -10,101 +10,108 @@ import objects
 # if __file__ == 'main.py':
 words_filepath = 'words.json'
 
-words = []
+wordSets = []
 
 def load_words():
-    global words
+    global wordSets
     try: # to load words
-        with open(words_filepath, 'r') as input:
-            word_dict = json.load(input)["words"]
-            for w in word_dict:
-                word = add_word(w["english"], w["german"], w["french"], w["germanGender"], w["frenchGender"], w["catergories"])
+        with open(words_filepath, 'r') as wordsIn:
+            word_dict = json.load(wordsIn)["sets"]
+            for ws in word_dict:
+                word_list = []
+                for w in ws["words"]:
+                    word_list.append(add_word(w["english"], w["language"], w['translation'], w["gender"]))
+                add_set(ws["language"], ws["topic"], word_list)
     except FileNotFoundError: # Create file if not found
-        print("Failed to find file '", words_filepath, "'.")
-        with open(words_filepath, 'w'):
-            json.dump({"words": []}, output, -1, indent=2)
+        print("Failed to find file '" + words_filepath + "'.")
+        with open(words_filepath, 'w') as output:
+            json.dump({}, output, -1, indent=2)
+    except KeyError: # If there is nothing in objects
+        print("You need to add some words and don't forget to save!")
 
 def save_words():
-    global words
-    word_json = []
-    for w in words:
-        word_json.append(w.__dict__)
+    global wordSets
+
+    jsonFormat = {"sets": []}
+    for ws in wordSets:
+        print("hey")
+        words = []
+        for w in ws.words:
+            words.append(w.__dict__)
+            print("ayy")
+        jsonFormat["sets"].append({"language": ws.language, "topic": ws.topic, "words": words})
     with open(words_filepath, 'w') as output:
-        json.dump({"words": word_json}, fp=output, indent=2)
+        json.dump(jsonFormat, fp=output, indent=2)
 
-def check_word_exists(word, language=None):
-    global words
-    if words != []:
-        if language == 'english':
-            for w in words:
-                if w.english == word:
-                    return True
-            return False
-        elif language == 'german':
-            for w in words:
-                if w.german == word:
-                    return True
-            return False
-        elif language == 'french':
-            for w in words:
-                if w.french == word:
-                    return True
-            return False
-        else:
-            for w in words:
-                if w.english == word:
-                    return True
-                if w.german == word:
-                    return True
-                if w.french == word:
-                    return True
-            return False
+def findSet(language, topic):
+    found = None
+    for s in wordSets:
+        print(s.topic)
+        if s.topic == topic:
+            found = s
+            break
     else:
-        return False
+        add_set(language, topic, [])
+        print("nah")
+        return wordSets[-1]
+    return found
 
-def add_word(english, german, french, germanGender, frenchGender, catergories):
-    global words
-    # check_word_exists(english)
-    words.append(objects.Word(english, german, french, germanGender, frenchGender, catergories))
+def findWord(aSet, english):
+    found = None
+    for i, w in enumerate(aSet.words):
+        if w.english == english:
+            found = i
+            break
+    else:
+        return None
+    return found
+
+def add_word(english, language, translation, gender, topic=None):
+    if topic is not None:
+        wSet = findSet(language, topic)
+        wSet.words.append(objects.Word(english, language, translation, gender))
+    else:
+        return objects.Word(english, language, translation, gender)
+
+def add_set(language, topic, words):
+    global wordSets
+    wordSets.append(objects.WordSet(language, topic, words))
 
 def remove_duplicates(seq):
     seen = set()
     seen_add = seen.add
     return [x for x in seq if not (x in seen or seen_add(x))]
 
+def print_words_in_set(aSet):
+    for w in aSet.words:
+        print(w.english, '-', w.translation)
+
 load_words()
-
-catergories = []
-for c in words:
-    catergories.append(c.catergories)
-catergories = remove_duplicates([y for x in catergories for y in x])
-
-quiz = objects.Quiz(words)
 
 running = True
 while running:
     action = input("What would you like to do? ").lower()
     if action == 'add word':
         english = input("What is the word in English? ").lower()
-        german = input("What is the word in German? ").lower()
-        french = input("What is the word in French? ").lower()
-        germanGender = input("What is the gender of that word in German? ").lower()
-        frenchGender = input("What is the gender of that word in French? ").lower()
-        catergories = input("What catergories are this word in? ").lower().split()
+        language = input("What language? ").lower()
+        translation = input("What is the word in", language + "? ").lower()
+        gender = input("What is the gender of that word? ").lower()
+        topic = input("What topic is this word in? ").lower()
 
-        add_word(english, german, french, germanGender, frenchGender, catergories)
+        add_word(english, language, translation, gender, topic)
 
-    elif action.split()[0] == 'quiz':
+    elif action.split()[0] == 'quiz': # needs language and topic
         print("eh")
         if len(action.split()) in [1,2]:
             print("More info is needed to start a quiz.")
-        elif action.split()[1] == 'french' and action.split()[2] in catergories:
-            print('eh')
-            quiz.quiz('french')
-        elif action.split()[1] == 'german' and action.split()[2] in catergories:
-            quiz.quiz('german')
+        elif action.split()[1] == 'french':
+            quiz = objects.Quiz(findSet('french', action.split()[2].lower()))
+            quiz.quiz()
+        elif action.split()[1] == 'german':
+            quiz = objects.Quiz(findSet('german', action.split()[2].lower()))
+            quiz.quiz()
 
-    elif action == 'save words':
+    elif action == 'save':
         save_words()
 
     elif action == 'exit':

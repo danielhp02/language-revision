@@ -1,26 +1,16 @@
 {
-  "words": [
+  "sets": [
     {
-      "catergories": [
-        "animals",
-        "pets"
+      "language": "german",
+      "words": [
+        {
+          "english": "dog",
+          "translation": "hund",
+          "language": "german",
+          "gender": "m"
+        }
       ],
-      "french": "chat",
-      "german": "katze",
-      "english": "cat",
-      "germanGender": "f",
-      "frenchGender": "m"
-    },
-    {
-      "catergories": [
-        "animals",
-        "pets"
-      ],
-      "french": "chien",
-      "german": "hund",
-      "english": "dog",
-      "germanGender": "m",
-      "frenchGender": "m"
+      "topic": "pets"
     }
   ]
 }
