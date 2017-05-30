@@ -1,16 +1,18 @@
 {
   "sets": [
     {
+      "nouns": [],
       "language": "german",
-      "words": [
+      "verbs": [
         {
-          "english": "dog",
-          "translation": "hund",
+          "translation": "geschehen",
           "language": "german",
-          "gender": "m"
+          "pastParticiple": "geschehen",
+          "english": "to happen",
+          "auxVerb": "sein"
         }
       ],
-      "topic": "pets"
+      "topic": "liste1"
     }
   ]
 }

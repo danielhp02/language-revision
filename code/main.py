@@ -16,44 +16,58 @@ def load_words():
     global wordSets
     try: # to load words
         with open(words_filepath, 'r') as wordsIn:
-            word_dict = json.load(wordsIn)["sets"]
-            for ws in word_dict:
-                word_list = []
-                for w in ws["words"]:
-                    word_list.append(add_word(w["english"], w["language"], w['translation'], w["gender"]))
-                add_set(ws["language"], ws["topic"], word_list)
+            sets_dict = json.load(wordsIn)["sets"]
+            print("de")
+        for ws in sets_dict:
+            noun_list = []
+            if len(ws["nouns"]) > 0:
+                print(len(ws["nouns"]))
+                for n in ws["nouns"]:
+                    noun_list.append(add_noun(n["english"], n["language"], n['translation'], n["gender"], topic=None))
+                    print("hey")
+            verb_list = []
+            if len(ws["verbs"]) > 0:
+                for v in ws["verbs"]:
+                    verb_list.append(add_noun(v["english"], v["language"], v['translation'], v["pastParticiple"], v["auxVerb"]))
+                    print("v")
+            add_set(ws["language"], ws["topic"], noun_list, verb_list)
+            print(ws["topic"])
     except FileNotFoundError: # Create file if not found
-        print("Failed to find file '" + words_filepath + "'.")
+        print(coloured("Failed to find file '" + words_filepath + "'.", 'yellow'))
         with open(words_filepath, 'w') as output:
             json.dump({}, output, -1, indent=2)
     except KeyError: # If there is nothing in objects
-        print("You need to add some words and don't forget to save!")
+        print(coloured("You need to add some words and don't forget to save!", 'yellow'))
 
 def save_words():
     global wordSets
 
     jsonFormat = {"sets": []}
     for ws in wordSets:
-        print("hey")
-        words = []
-        for w in ws.words:
+        nouns = []
+        verbs = []
+        for w in ws.nouns:
             words.append(w.__dict__)
-            print("ayy")
-        jsonFormat["sets"].append({"language": ws.language, "topic": ws.topic, "words": words})
+        for w in ws.verbs:
+            verbs.append(w.__dict__)
+        jsonFormat["sets"].append({"language": ws.language, "topic": ws.topic, "nouns": nouns, "verbs": verbs})
     with open(words_filepath, 'w') as output:
         json.dump(jsonFormat, fp=output, indent=2)
+    print(coloured("Words saved.", "blue"))
 
-def findSet(language, topic):
+def findSet(language, topic, createSet=True):
     found = None
     for s in wordSets:
         print(s.topic)
         if s.topic == topic:
             found = s
+            print("set found")
             break
     else:
-        add_set(language, topic, [])
-        print("nah")
-        return wordSets[-1]
+        print("set not found")
+        if createSet:
+            add_set(language, topic, [], [])
+            return wordSets[-1]
     return found
 
 def findWord(aSet, english):
@@ -66,50 +80,122 @@ def findWord(aSet, english):
         return None
     return found
 
-def add_word(english, language, translation, gender, topic=None):
+def add_noun(english, language, translation, gender, topic=None):
     if topic is not None:
-        wSet = findSet(language, topic)
-        wSet.words.append(objects.Word(english, language, translation, gender))
+        print("hmm...")
+        wSet = findSet(language, topic, False)
+        if wSet is not None:
+            wSet.nouns.append(objects.Noun(english, language, translation, gender))
     else:
-        return objects.Word(english, language, translation, gender)
+        return objects.Noun(english, language, translation, gender)
 
-def add_set(language, topic, words):
+def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None):
+    if topic is not None:
+        print("hmm")
+        wSet = findSet(language, topic)
+        wSet.verbs.append(objects.Verb(english, language, translation, pastParticiple, auxVerb))
+    else:
+        return objects.Verb(english, language, translation, pastParticiple, auxVerb)
+
+def add_set(language, topic, nouns, verbs):
     global wordSets
-    wordSets.append(objects.WordSet(language, topic, words))
+    wordSets.append(objects.WordSet(language, topic, nouns, verbs))
+    print(coloured("New topic "+topic+" created.", 'magenta'))
 
 def remove_duplicates(seq):
     seen = set()
     seen_add = seen.add
     return [x for x in seq if not (x in seen or seen_add(x))]
 
-def print_words_in_set(aSet):
-    for w in aSet.words:
-        print(w.english, '-', w.translation)
+def print_words_in_set(language, topic):
+    aSet = findSet(language, topic, False)
+    if aSet is not None:
+        print("Nouns:")
+        for n in aSet.nouns:
+            print(n)#n.english, '-', n.translation)
+            print("hey")
+        print("Verbs:")
+        for v in aSet.verbs:
+            print(v)#v.english, '-', v.translation)
+
+def coloured(text, colour, bold=False):
+    reset = '\u001b[0m'
+    if not bold:
+        if colour == 'black':
+            return '\u001b[30m' + text + reset
+        elif colour == 'red':
+            return '\u001b[31m' + text + reset
+        elif colour == 'green':
+            return '\u001b[32m' + text + reset
+        elif colour == 'yellow':
+            return '\u001b[33m' + text + reset
+        elif colour == 'blue':
+            return '\u001b[34m' + text + reset
+        elif colour == 'magenta':
+            return '\u001b[35m' + text + reset
+        elif colour == 'cyan':
+            return '\u001b[36m' + text + reset
+        elif colour == 'white':
+            return '\u001b[37m' + text + reset
+    else: # Bold
+        if colour == 'black':
+            return '\u001b[30;1m' + text + reset
+        elif colour == 'red':
+            return '\u001b[31;1m' + text + reset
+        elif colour == 'green':
+            return '\u001b[32;1m' + text + reset
+        elif colour == 'yellow':
+            return '\u001b[33;1m' + text + reset
+        elif colour == 'blue':
+            return '\u001b[34;1m' + text + reset
+        elif colour == 'magenta':
+            return '\u001b[35;1m' + text + reset
+        elif colour == 'cyan':
+            return '\u001b[36;1m' + text + reset
+        elif colour == 'white':
+            return '\u001b[37;1m' + text + reset
 
 load_words()
+quiz = objects.Quiz(coloured)
 
 running = True
 while running:
-    action = input("What would you like to do? ").lower()
+    action = input(coloured("What would you like to do? ", 'blue', True)).lower()
     if action == 'add word':
-        english = input("What is the word in English? ").lower()
-        language = input("What language? ").lower()
-        translation = input("What is the word in", language + "? ").lower()
-        gender = input("What is the gender of that word? ").lower()
-        topic = input("What topic is this word in? ").lower()
+        english = input(coloured("What is the word in English? ", 'magenta', True)).lower()
+        language = input(coloured("What language? ", 'magenta', True)).lower()
+        translation = input(coloured("What is the word in " + language + "? ", 'magenta', True)).lower()
+        topic = input(coloured("What topic is this word in? ", 'magenta', True)).lower()
 
-        add_word(english, language, translation, gender, topic)
+        type = input(coloured("What type of word is this? (noun/verb) ", 'magenta', True)).lower()
+        if type == 'noun':
+            gender = input(coloured("What is the gender of this word? ", 'magenta', True)).lower()
 
-    elif action.split()[0] == 'quiz': # needs language and topic
-        print("eh")
-        if len(action.split()) in [1,2]:
-            print("More info is needed to start a quiz.")
+            add_noun(english, language, translation, gender, topic)
+            print(coloured("Noun added to topic '" + topic + "'.", 'magenta'))
+        elif type == 'verb':
+            pastParticiple = input(coloured("What is the past participle of this word? ", 'magenta', True)).lower()
+            auxVerb = input(coloured("What auxiliary verb does this word use? ", 'magenta', True)).lower()
+
+            add_verb(english, language, translation, pastParticiple, auxVerb, topic)
+            print(coloured("Verb added to topic '" + topic + "'.", 'magenta'))
+
+    elif action.split()[0] == 'quiz': # needs language, type and topic
+        if len(action.split()) in [1,2,3]:
+            print(coloured("More info is needed to start a quiz.", 'yellow'))
         elif action.split()[1] == 'french':
-            quiz = objects.Quiz(findSet('french', action.split()[2].lower()))
-            quiz.quiz()
+            if action.split()[2] == 'verbs':
+                quiz.verbs(findSet('french', action.split()[3].lower()))
+            elif action.split()[2] == 'nouns':
+                quiz.nouns(findSet('french', action.split()[3].lower()))
         elif action.split()[1] == 'german':
-            quiz = objects.Quiz(findSet('german', action.split()[2].lower()))
-            quiz.quiz()
+            if action.split()[2] == 'verbs':
+                quiz.verbs(findSet('german', action.split()[3].lower()))
+            elif action.split()[2] == 'nouns':
+                quiz.nouns(findSet('german', action.split()[3].lower()))
+
+    elif action.split()[0] == 'print':
+        print_words_in_set(action.split()[1], action.split()[2])
 
     elif action == 'save':
         save_words()

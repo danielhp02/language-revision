@@ -1,53 +1,105 @@
+# -*- coding: utf-8 -*-
+
 from random import sample
 
-class Word(object):
+class Noun(object):
     def __init__(self, english, language, translation, gender):
         self.english = english
         self.language = language
         self.translation = translation
         self.gender = gender
 
+class Verb(object):
+    def __init__(self, english, language, translation, pastParticiple, auxVerb):
+        self.english = english
+        self.language = language
+        self.translation = translation
+        self.pastParticiple = pastParticiple
+        self.auxVerb = auxVerb
+
 class WordSet(object):
-    def __init__(self, language, topic, words):
+    def __init__(self, language, topic, nouns, verbs):
         self.language = language
         self.topic = topic
-        self.words = words
+        self.nouns = nouns
+        self.verbs = verbs
 
 class Quiz(object):
-    def __init__(self, aSet):
-        self.set = aSet
+    def __init__(self, coloured):
         self.score = 0
+        self.coloured = coloured
 
     def randomise(self, length):
         return sample(range(length), len(range(length)))
 
-    def quiz(self):
-        deck = self.randomise(len(self.set.words))
+    def nouns(self, aSet):
+        deck = self.randomise(len(aSet.words))
 
         while True:
             try:
                 index = deck.pop()
             except IndexError:
                 self.score = float(self.score/2)
-                highestPossibleScore = str(len(self.set.words))
-                print("\nRound over! Your score that round was " + '%g'%(self.score) + " out of " + highestPossibleScore + ".\n")
-                self.randomise(len(self.set.words))
+                highestPossibleScore = str(len(aSet.words))
+                print(self.coloured("\nRound over! Your score that round was " + '%g'%(self.score) + " out of " + highestPossibleScore + ".\n", 'cyan'))
                 self.score = 0
                 return
-            textIn = input("What is the gender of '" + self.set.words[index].translation + "'? ").lower()
+
+            textIn = input(self.coloured("What is the gender of '" + aSet.words[index].translation + "'? ", 'cyan', True)).lower()
             if textIn == 'exit':
                 return
-            elif textIn == self.set.words[index].gender:
-                print("Correct!")
+            elif textIn == aSet.words[index].gender:
+                print(self.coloured("Correct!", 'green'))
                 self.score += 1 # Half point, 1 so it's not adding floats
             else:
-                print("Incorrect! The answer was " + self.set.words[index].gender + ".")
-            textIn = ''
-            textIn = input("What is that in English? ").lower()
+                print(self.coloured("Incorrect! The answer was " + aSet.words[index].gender + ".", 'red'))
+
+            textIn = input(self.coloured("What is that in English? ", 'cyan', True)).lower()
             if textIn == "exit":
                 return
-            elif textIn == self.set.words[index].english:
-                print("Correct!")
+            elif textIn == aSet.words[index].english:
+                print(self.coloured("Correct!", 'green'))
                 self.score += 1 # Half point
             else:
-                print("Incorrect! The answer was " + self.set.words[index].english + ".")
+                print(self.coloured("Incorrect! The answer was " + aSet.words[index].english + "." + ".", 'red'))
+
+    def verbs(self, aSet): # At the moment, this is for past prticiples. A conjugation quiz will be added soon
+        deck = self.randomise(len(aSet.words))
+        auxiliaryVerbs = [haben, sein] if aSet.language == 'german' else [avoir, être] # Not very flexible, I know. Will update.
+
+        while True:
+            try:
+                index = deck.pop()
+            except IndexError:
+                self.score = float(self.score/2)
+                highestPossibleScore = str(len(aSet.words))
+                print(self.coloured("\nRound over! Your score that round was " + '%g'%(self.score) + " out of " + highestPossibleScore + ".\n", 'cyan'))
+                self.score = 0
+                return
+
+            textIn = input(self.coloured("What is the past participle of '" + aSet.words[index].pastParticiple + "'? ", 'cyan', True)).lower()
+            if textIn == 'exit':
+                return
+            elif textIn == aSet.words[index].pastParticiple:
+                print(self.coloured("Correct!", 'green'))
+                self.score += 1 # Half point, 1 so it's not adding floats
+            else:
+                print(self.coloured("Incorrect! The answer was " + aSet.words[index].pastParticiple + ".", 'red'))
+
+            textIn = input(self.coloured("Does '" + aSet.words[index].translation + "' use " + auxiliaryVerbs[0] + " or " + auxiliaryVerbs[1] +"? ", 'cyan', True)).lower()
+            if textIn == 'exit':
+                return
+            elif textIn == aSet.words[index].auxVerb:
+                print(self.coloured("Correct!", 'green'))
+                self.score += 1 # Half point, 1 so it's not adding floats
+            else:
+                print(self.coloured("Incorrect! The answer was " + aSet.words[index].auxVerb + ".", 'red'))
+
+            textIn = input(self.coloured("What is the english translation of '" + aSet.words[index].translation + "'? ", 'cyan', True)).lower()
+            if textIn == 'exit':
+                return
+            elif textIn == aSet.words[index].english:
+                print(self.coloured("Correct!", 'green'))
+                self.score += 1 # Half point, 1 so it's not adding floats
+            else:
+                print(self.coloured("Incorrect! The answer was " + aSet.words[index].english + ".", 'red'))
