@@ -17,7 +17,7 @@ def load_words():
     try: # to load words
         with open(words_filepath, 'r') as wordsIn:
             sets_dict = json.load(wordsIn)["sets"]
-            print("de")
+        print(coloured("de", 'green'))
         for ws in sets_dict:
             noun_list = []
             if len(ws["nouns"]) > 0:
@@ -120,8 +120,12 @@ def print_words_in_set(language, topic):
             print(v.translation, '-', v.english)
 
 def coloured(text, colour, bold=False):
+    # Blue is main UI
+    # Yellow is for warnings
+    # Green/red for correct/incorrect answers
+    # Cyan is for quizes
     reset = '\u001b[0m'
-    if not bold:
+    if not bold: # Not bold will be info
         if colour == 'black':
             return '\u001b[30m' + text + reset
         elif colour == 'red':
@@ -138,7 +142,7 @@ def coloured(text, colour, bold=False):
             return '\u001b[36m' + text + reset
         elif colour == 'white':
             return '\u001b[37m' + text + reset
-    else: # Bold
+    else: # Bold will be questions/require input
         if colour == 'black':
             return '\u001b[30;1m' + text + reset
         elif colour == 'red':
