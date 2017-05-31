@@ -34,11 +34,11 @@ def load_words():
             add_set(ws["language"], ws["topic"], noun_list, verb_list)
             print(ws["topic"])
     except FileNotFoundError: # Create file if not found
-        coloured("Failed to find file '" + words_filepath + "'.", 'yellow')
+        print(coloured("Failed to find file '" + words_filepath + "'.", 'yellow'))
         with open(words_filepath, 'w') as output:
             json.dump({}, output, -1, indent=2)
     except KeyError: # If there is nothing in objects
-        coloured("You need to add some words and don't forget to save!", 'yellow')
+        print(coloured("You need to add some words and don't forget to save!", 'yellow'))
 
 def save_words():
     global wordSets
@@ -54,7 +54,7 @@ def save_words():
         jsonFormat["sets"].append({"language": ws.language, "topic": ws.topic, "nouns": nouns, "verbs": verbs})
     with open(words_filepath, 'w') as output:
         json.dump(jsonFormat, fp=output, indent=2)
-    coloured("Words saved.", "blue")
+    print(coloured("Words saved.", "blue"))
 
 def findSet(language, topic, createSet=True):
     found = None
@@ -101,7 +101,7 @@ def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None
 def add_set(language, topic, nouns, verbs):
     global wordSets
     wordSets.append(objects.WordSet(language, topic, nouns, verbs))
-    coloured("New topic "+topic+" created.", 'magenta')
+    print(coloured("New topic "+topic+" created.", 'magenta'))
 
 def remove_duplicates(seq):
     seen = set()
@@ -123,38 +123,38 @@ def coloured(text, colour, bold=False):
     reset = '\u001b[0m'
     if not bold:
         if colour == 'black':
-            print('\u001b[30m' + text + reset)
+            return '\u001b[30m' + text + reset
         elif colour == 'red':
-            print('\u001b[31m' + text + reset)
+            return '\u001b[31m' + text + reset
         elif colour == 'green':
-            print('\u001b[32m' + text + reset)
+            return '\u001b[32m' + text + reset
         elif colour == 'yellow':
-            print('\u001b[33m' + text + reset)
+            return '\u001b[33m' + text + reset
         elif colour == 'blue':
-            print('\u001b[34m' + text + reset)
+            return '\u001b[34m' + text + reset
         elif colour == 'magenta':
-            print('\u001b[35m' + text + reset)
+            return '\u001b[35m' + text + reset
         elif colour == 'cyan':
-            print('\u001b[36m' + text + reset)
+            return '\u001b[36m' + text + reset
         elif colour == 'white':
-            print('\u001b[37m' + text + reset)
+            return '\u001b[37m' + text + reset
     else: # Bold
         if colour == 'black':
-            print('\u001b[30;1m' + text + reset)
+            return '\u001b[30;1m' + text + reset
         elif colour == 'red':
-            print('\u001b[31;1m' + text + reset)
+            return '\u001b[31;1m' + text + reset
         elif colour == 'green':
-            print('\u001b[32;1m' + text + reset)
+            return '\u001b[32;1m' + text + reset
         elif colour == 'yellow':
-            print('\u001b[33;1m' + text + reset)
+            return '\u001b[33;1m' + text + reset
         elif colour == 'blue':
-            print('\u001b[34;1m' + text + reset)
+            return '\u001b[34;1m' + text + reset
         elif colour == 'magenta':
-            print('\u001b[35;1m' + text + reset)
+            return '\u001b[35;1m' + text + reset
         elif colour == 'cyan':
-            print('\u001b[36;1m' + text + reset)
+            return '\u001b[36;1m' + text + reset
         elif colour == 'white':
-            print('\u001b[37;1m' + text + reset)
+            return '\u001b[37;1m' + text + reset
 
 load_words()
 quiz = objects.Quiz(coloured)
