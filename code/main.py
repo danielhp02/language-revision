@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# NOTE: make loading less verbose, esp. with creating words and sets
 from random import randint
 import json
 import os
@@ -14,31 +14,32 @@ wordSets = []
 
 def load_words():
     global wordSets
+
     try: # to load words
         with open(words_filepath, 'r') as wordsIn:
             sets_dict = json.load(wordsIn)["sets"]
-        print(coloured("de", 'green'))
+
         for ws in sets_dict:
+            print(coloured("Loading set of topic: " + ws['topic'], 'magenta'))
             noun_list = []
             if len(ws["nouns"]) > 0:
-                print("hey")
+                print(coloured("Loading nouns of topic: " + ws['topic'], 'magenta'))
                 for n in ws["nouns"]:
                     noun_list.append(add_noun(n["english"], n["language"], n['translation'], n["gender"]))
-                    print("hey")
             verb_list = []
             if len(ws["verbs"]) > 0:
-                print("eh")
+                print(coloured("Loading verbs of topic: " + ws['topic'], 'magenta'))
                 for v in ws["verbs"]:
                     verb_list.append(add_verb(v["english"], v["language"], v['translation'], v["pastParticiple"], v["auxVerb"]))
-                    print("v")
+
             add_set(ws["language"], ws["topic"], noun_list, verb_list)
-            print(ws["topic"])
+            print(coloured(ws['topic'] + " successfully loaded.", 'magenta'))
     except FileNotFoundError: # Create file if not found
         print(coloured("Failed to find file '" + words_filepath + "'.", 'yellow'))
         with open(words_filepath, 'w') as output:
             json.dump({}, output, -1, indent=2)
     except KeyError: # If there is nothing in objects
-        print(coloured("You need to add some words and don't forget to save!", 'yellow'))
+        print(coloured("You need to add some words.\nDon't forget to save!", 'yellow'))
 
 def save_words():
     global wordSets
@@ -54,47 +55,50 @@ def save_words():
         jsonFormat["sets"].append({"language": ws.language, "topic": ws.topic, "nouns": nouns, "verbs": verbs})
     with open(words_filepath, 'w') as output:
         json.dump(jsonFormat, fp=output, indent=2)
-    print(coloured("Words saved.", "blue"))
+    print(coloured("Words saved.", "magenta"))
 
 def findSet(language, topic, createSet=True):
     found = None
     for s in wordSets:
-        print(s.topic)
+        # print(s.topic)
         if s.topic == topic:
             found = s
-            print("set found")
+            print(coloured("Set found for topic '" + topic + "'.", 'magenta'))
             break
     else:
-        print("set not found")
+        print(coloured("Set for topic '" + topic + "' not found.", 'magenta'))
         if createSet:
             add_set(language, topic, [], [])
             return wordSets[-1]
     return found
 
-def findWord(aSet, english):
+def findWord(aSet, english): # Need to update
     found = None
     for i, w in enumerate(aSet.words):
         if w.english == english:
             found = i
+            print(coloured("Word '" + english + "' found in set '" + topic + "'.", 'magenta'))
             break
     else:
+        print(coloured("Word '" + english + "' not found in set '" + topic + "'.", 'magenta'))
         return None
     return found
 
 def add_noun(english, language, translation, gender, topic=None):
     if topic is not None:
-        print("hmm...")
         wSet = findSet(language, topic, False)
         if wSet is not None:
             wSet.nouns.append(objects.Noun(english, language, translation, gender))
+            print(coloured("Noun successfully added to set '" + topic + "'.", 'magenta'))
     else:
+        print(coloured("Noun successfully added.", 'magenta'))
         return objects.Noun(english, language, translation, gender)
 
 def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None):
     if topic is not None:
-        print("hmm")
-        wSet = findSet(language, topic)
+        wSet = findSet(language, topic) # do if stuff
         wSet.verbs.append(objects.Verb(english, language, translation, pastParticiple, auxVerb))
+        print(coloured("Verb successfully added to set '" + topic + "'.", 'magenta'))
     else:
         return objects.Verb(english, language, translation, pastParticiple, auxVerb)
 
@@ -124,6 +128,7 @@ def coloured(text, colour, bold=False):
     # Yellow is for warnings
     # Green/red for correct/incorrect answers
     # Cyan is for quizes
+    # Magenta is word storage related
     reset = '\u001b[0m'
     if not bold: # Not bold will be info
         if colour == 'black':
@@ -178,13 +183,11 @@ try:
                 gender = input(coloured("What is the gender of this word? ", 'magenta', True)).lower()
 
                 add_noun(english, language, translation, gender, topic)
-                print(coloured("Noun added to topic '" + topic + "'.", 'magenta'))
             elif type == 'verb':
                 pastParticiple = input(coloured("What is the past participle of this word? ", 'magenta', True)).lower()
                 auxVerb = input(coloured("What auxiliary verb does this word use? ", 'magenta', True)).lower()
 
                 add_verb(english, language, translation, pastParticiple, auxVerb, topic)
-                print(coloured("Verb added to topic '" + topic + "'.", 'magenta'))
 
         elif action.split()[0] == 'quiz': # needs language, type and topic
             if len(action.split()) in [1,2,3]:

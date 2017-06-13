@@ -1,18 +1,67 @@
 {
   "sets": [
     {
-      "nouns": [],
-      "language": "german",
       "verbs": [
         {
-          "translation": "geschehen",
-          "language": "german",
-          "pastParticiple": "geschehen",
           "english": "to happen",
-          "auxVerb": "sein"
+          "language": "german",
+          "auxVerb": "sein",
+          "translation": "geschehen",
+          "pastParticiple": "geschehen"
         }
       ],
+      "language": "german",
+      "nouns": [],
       "topic": "liste1"
+    },
+    {
+      "verbs": [
+        {
+          "english": "to sit",
+          "language": "german",
+          "auxVerb": "haben",
+          "translation": "sitzen",
+          "pastParticiple": "gesessen"
+        },
+        {
+          "english": "to be able to",
+          "language": "german",
+          "auxVerb": "haben",
+          "translation": "koennen",
+          "pastParticiple": "gekonnt"
+        },
+        {
+          "english": "to startle",
+          "language": "german",
+          "auxVerb": "haben",
+          "translation": "erschrecken",
+          "pastParticiple": "erschrocken"
+        },
+        {
+          "english": "to dig",
+          "language": "german",
+          "auxVerb": "haben",
+          "translation": "graben",
+          "pastParticiple": "gegraben"
+        },
+        {
+          "english": "to turn",
+          "language": "german",
+          "auxVerb": "haben",
+          "translation": "wenden",
+          "pastParticiple": "gewendet"
+        },
+        {
+          "english": "to suffer",
+          "language": "german",
+          "auxVerb": "haben",
+          "translation": "leiden",
+          "pastParticiple": "gelitten"
+        }
+      ],
+      "language": "german",
+      "nouns": [],
+      "topic": "liste2"
     }
   ]
 }

@@ -77,7 +77,7 @@ class Quiz(object):
                 self.score = 0
                 return
 
-            textIn = input(self.coloured("What is the past participle of '" + aSet.verbs[index].pastParticiple + "'? ", 'cyan', True)).lower()
+            textIn = input(self.coloured("What is the past participle of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
             if textIn == 'exit':
                 return
             elif textIn == aSet.verbs[index].pastParticiple:
