@@ -86,7 +86,7 @@ class Quiz(object):
             else:
                 print(self.coloured("Incorrect! The answer was " + aSet.verbs[index].pastParticiple + ".", 'red'))
 
-            textIn = input(self.coloured("Does '" + aSet.verbs[index].translation + "' use " + auxiliaryVerbs[0] + " or " + auxiliaryVerbs[1] +"? ", 'cyan', True)).lower()
+            textIn = input(self.coloured("Does '" + aSet.verbs[index].pastParticiple + "' use " + auxiliaryVerbs[0] + " or " + auxiliaryVerbs[1] +"? ", 'cyan', True)).lower()
             if textIn == 'exit':
                 return
             elif textIn == aSet.verbs[index].auxVerb:
