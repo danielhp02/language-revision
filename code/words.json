@@ -1,95 +1,102 @@
 {
   "sets": [
     {
-      "topic": "liste1",
-      "language": "german",
       "nouns": [],
       "verbs": [
         {
-          "translation": "geschehen",
           "pastParticiple": "geschehen",
           "language": "german",
-          "english": "to happen",
-          "auxVerb": "sein"
+          "auxVerb": "sein",
+          "translation": "geschehen",
+          "english": "to happen"
         }
-      ]
+      ],
+      "language": "german",
+      "topic": "liste1"
     },
     {
-      "topic": "liste2",
-      "language": "german",
       "nouns": [],
       "verbs": [
         {
-          "translation": "sitzen",
           "pastParticiple": "gesessen",
           "language": "german",
-          "english": "to sit",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "sitzen",
+          "english": "to sit"
         },
         {
-          "translation": "koennen",
           "pastParticiple": "gekonnt",
           "language": "german",
-          "english": "to be able to",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "koennen",
+          "english": "to be able to"
         },
         {
-          "translation": "erschrecken",
           "pastParticiple": "erschrocken",
           "language": "german",
-          "english": "to startle",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "erschrecken",
+          "english": "to startle"
         },
         {
-          "translation": "graben",
           "pastParticiple": "gegraben",
           "language": "german",
-          "english": "to dig",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "graben",
+          "english": "to dig"
         },
         {
-          "translation": "wenden",
           "pastParticiple": "gewendet",
           "language": "german",
-          "english": "to turn",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "wenden",
+          "english": "to turn"
         },
         {
-          "translation": "leiden",
           "pastParticiple": "gelitten",
           "language": "german",
-          "english": "to suffer",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "leiden",
+          "english": "to suffer"
         },
         {
-          "translation": "finden",
           "pastParticiple": "gefunden",
           "language": "german",
-          "english": "to find",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "finden",
+          "english": "to find"
         },
         {
-          "translation": "streichen",
           "pastParticiple": "gestrichen",
           "language": "german",
-          "english": "to stroke",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "streichen",
+          "english": "to stroke"
         },
         {
-          "translation": "stossen",
           "pastParticiple": "gestossen",
           "language": "german",
-          "english": "to push",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "stossen",
+          "english": "to push"
         },
         {
-          "translation": "riechen",
           "pastParticiple": "gerochen",
           "language": "german",
-          "english": "to smell",
-          "auxVerb": "haben"
+          "auxVerb": "haben",
+          "translation": "riechen",
+          "english": "to smell"
+        },
+        {
+          "pastParticiple": "gedurft",
+          "language": "german",
+          "auxVerb": "haben",
+          "translation": "duerfen",
+          "english": "to be allowed to"
         }
-      ]
+      ],
+      "language": "german",
+      "topic": "liste2"
     }
   ]
 }

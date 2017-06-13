@@ -73,7 +73,12 @@ class Quiz(object):
             except IndexError:
                 self.score = float(self.score/3) # 3 is the number of quesions for each verb
                 highestPossibleScore = str(len(aSet.verbs))
-                print(self.coloured("Round over! Your score that round was " + '%.2g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
+                if self.score < 10:
+                    print(self.coloured("Round over! Your score that round was " + '%.2g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
+                elif self.score < 100:
+                    print(self.coloured("Round over! Your score that round was " + '%.3g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
+                elif self.score < 1000:
+                    print(self.coloured("Round over! Your score that round was " + '%.4g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
                 self.score = 0
                 return
 
