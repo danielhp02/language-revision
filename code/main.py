@@ -180,12 +180,12 @@ try:
 
             type = input(coloured("What type of word is this? (noun/verb) ", 'magenta', True)).lower()
             if type == 'noun':
-                gender = input(coloured("What is the gender of this word? ", 'magenta', True)).lower()
+                gender = input(coloured("What is the gender of this noun? ", 'magenta', True)).lower()
 
                 add_noun(english, language, translation, gender, topic)
             elif type == 'verb':
-                pastParticiple = input(coloured("What is the past participle of this word? ", 'magenta', True)).lower()
-                auxVerb = input(coloured("What auxiliary verb does this word use? ", 'magenta', True)).lower()
+                pastParticiple = input(coloured("What is the past participle of this verb? ", 'magenta', True)).lower()
+                auxVerb = input(coloured("What auxiliary verb does this verb use? ", 'magenta', True)).lower()
 
                 add_verb(english, language, translation, pastParticiple, auxVerb, topic)
 
