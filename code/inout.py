@@ -39,3 +39,5 @@ def coloured(text, colour, bold=False):
             return '\u001b[36;1m' + text + reset
         elif colour == 'white':
             return '\u001b[37;1m' + text + reset
+
+#NOTE add question function here

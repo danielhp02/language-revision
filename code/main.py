@@ -10,10 +10,13 @@ import objects, inout
 # if __file__ == 'main.py':
 words_filepath = '../database/words.json'
 
-if sys.argv[1] != 'v':
-    quiet = True
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'v':
+        quiet = False
+    else:
+        quiet = True
 else:
-    quiet = False
+    quiet = True
 
 wordSets = []
 
@@ -25,22 +28,27 @@ def load_words():
             sets_dict = json.load(wordsIn)["sets"]
 
         for ws in sets_dict:
-            print(inout.coloured("Loading set of topic: " + ws['topic'], 'magenta'))
+            if not quiet:
+                print(inout.coloured("Loading set of topic: " + ws['topic'], 'magenta'))
             noun_list = []
             if len(ws["nouns"]) > 0:
-                print(inout.coloured("Loading nouns of topic: " + ws['topic'], 'magenta'))
+                if not quiet:
+                    print(inout.coloured("Loading nouns of topic: " + ws['topic'], 'magenta'))
                 for n in ws["nouns"]:
                     noun_list.append(add_noun(n["english"], n["language"], n['translation'], n["gender"], quiet=quiet))
             verb_list = []
             if len(ws["verbs"]) > 0:
-                print(inout.coloured("Loading verbs of topic: " + ws['topic'], 'magenta'))
+                if not quiet:
+                    print(inout.coloured("Loading verbs of topic: " + ws['topic'], 'magenta'))
                 for v in ws["verbs"]:
                     verb_list.append(add_verb(v["english"], v["language"], v['translation'], v["pastParticiple"], v["auxVerb"], quiet=quiet))
 
             add_set(ws["language"], ws["topic"], noun_list, verb_list, True)
-            print(inout.coloured(ws['topic'] + " successfully loaded.", 'magenta'))
+            if not quiet:
+                print(inout.coloured(ws['topic'] + " successfully loaded.", 'magenta'))
     except FileNotFoundError: # Create file if not found
-        print(inout.coloured("Failed to find file '" + words_filepath + "'.", 'yellow'))
+        if not quiet:
+            print(inout.coloured("Failed to find file '" + words_filepath + "'.", 'yellow'))
         with open(words_filepath, 'w') as output:
             json.dump({}, output, -1, indent=2)
     except KeyError: # If there is nothing in objects
