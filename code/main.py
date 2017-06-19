@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# NOTE: make loading less verbose, esp. with creating words and sets
+
 from random import randint
 import json
 import os
@@ -8,7 +8,12 @@ import sys
 import objects
 
 # if __file__ == 'main.py':
-words_filepath = 'words.json'
+words_filepath = '../database/words.json'
+
+if sys.argv[1] != 'v':
+    quiet = True
+else:
+    quiet = False
 
 wordSets = []
 
@@ -25,14 +30,14 @@ def load_words():
             if len(ws["nouns"]) > 0:
                 print(coloured("Loading nouns of topic: " + ws['topic'], 'magenta'))
                 for n in ws["nouns"]:
-                    noun_list.append(add_noun(n["english"], n["language"], n['translation'], n["gender"]))
+                    noun_list.append(add_noun(n["english"], n["language"], n['translation'], n["gender"], quiet=quiet))
             verb_list = []
             if len(ws["verbs"]) > 0:
                 print(coloured("Loading verbs of topic: " + ws['topic'], 'magenta'))
                 for v in ws["verbs"]:
-                    verb_list.append(add_verb(v["english"], v["language"], v['translation'], v["pastParticiple"], v["auxVerb"]))
+                    verb_list.append(add_verb(v["english"], v["language"], v['translation'], v["pastParticiple"], v["auxVerb"], quiet=quiet))
 
-            add_set(ws["language"], ws["topic"], noun_list, verb_list)
+            add_set(ws["language"], ws["topic"], noun_list, verb_list, True)
             print(coloured(ws['topic'] + " successfully loaded.", 'magenta'))
     except FileNotFoundError: # Create file if not found
         print(coloured("Failed to find file '" + words_filepath + "'.", 'yellow'))
@@ -84,28 +89,35 @@ def findWord(aSet, english): # Need to update
         return None
     return found
 
-def add_noun(english, language, translation, gender, topic=None):
+def add_noun(english, language, translation, gender, topic=None, quiet=False):
     if topic is not None:
         wSet = findSet(language, topic, False)
         if wSet is not None:
             wSet.nouns.append(objects.Noun(english, language, translation, gender))
-            print(coloured("Noun successfully added to set '" + topic + "'.", 'magenta'))
+            if not quiet:
+                print(coloured("Noun successfully added to set '" + topic + "'.", 'magenta'))
     else:
-        print(coloured("Noun successfully added.", 'magenta'))
+        if not quiet:
+            print(coloured("Noun successfully added.", 'magenta'))
         return objects.Noun(english, language, translation, gender)
 
-def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None):
+def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None, quiet=False):
     if topic is not None:
-        wSet = findSet(language, topic) # do if stuff
-        wSet.verbs.append(objects.Verb(english, language, translation, pastParticiple, auxVerb))
-        print(coloured("Verb successfully added to set '" + topic + "'.", 'magenta'))
+        wSet = findSet(language, topic)
+        if wSet is not None:
+            wSet.verbs.append(objects.Verb(english, language, translation, pastParticiple, auxVerb))
+            if not quiet:
+                print(coloured("Verb successfully added to set '" + topic + "'.", 'magenta'))
     else:
+        if not quiet:
+            print(coloured("Verb successfully added.", 'magenta'))
         return objects.Verb(english, language, translation, pastParticiple, auxVerb)
 
-def add_set(language, topic, nouns, verbs):
+def add_set(language, topic, nouns, verbs, quiet=False):
     global wordSets
     wordSets.append(objects.WordSet(language, topic, nouns, verbs))
-    print(coloured("New topic "+topic+" created.", 'magenta'))
+    if not quiet:
+        print(coloured("New topic "+topic+" created.", 'magenta'))
 
 def remove_duplicates(seq):
     seen = set()
@@ -192,18 +204,20 @@ try:
         elif action.split()[0] == 'quiz': # needs language, type and topic
             if len(action.split()) in [1,2,3]:
                 print(coloured("More info is needed to start a quiz.", 'yellow'))
+
             elif action.split()[1] == 'french':
                 if action.split()[2] == 'verbs':
                     quiz.verbs(findSet('french', action.split()[3].lower()))
                 elif action.split()[2] == 'nouns':
                     quiz.nouns(findSet('french', action.split()[3].lower()))
+
             elif action.split()[1] == 'german':
                 if action.split()[2] == 'verbs':
                     quiz.verbs(findSet('german', action.split()[3].lower()))
                 elif action.split()[2] == 'nouns':
                     quiz.nouns(findSet('german', action.split()[3].lower()))
 
-        elif action.split()[0] == 'print':
+        elif action.split()[0] == 'print': # language, topic
             print_words_in_set(action.split()[1], action.split()[2])
 
         elif action == 'save':
