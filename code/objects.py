@@ -32,7 +32,7 @@ class Quiz(object):
     def randomise(self, length):
         return sample(range(length), len(range(length)))
 
-    def nouns(self, aSet):
+    def nouns(self, aSet): # NOTE: add new features from verb quiz to noun quiz
         deck = self.randomise(len(aSet.nouns))
 
         while True:
