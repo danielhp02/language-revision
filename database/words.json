@@ -1,102 +1,158 @@
 {
   "sets": [
     {
-      "nouns": [],
+      "language": "german",
+      "topic": "liste1",
       "verbs": [
         {
-          "pastParticiple": "geschehen",
+          "english": "to happen",
           "language": "german",
+          "pastParticiple": "geschehen",
           "auxVerb": "sein",
-          "translation": "geschehen",
-          "english": "to happen"
+          "translation": "geschehen"
         }
       ],
-      "language": "german",
-      "topic": "liste1"
+      "nouns": []
     },
     {
-      "nouns": [],
+      "language": "german",
+      "topic": "liste2",
       "verbs": [
         {
+          "english": "to sit",
+          "language": "german",
           "pastParticiple": "gesessen",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "sitzen",
-          "english": "to sit"
+          "translation": "sitzen"
         },
         {
+          "english": "to be able to",
+          "language": "german",
           "pastParticiple": "gekonnt",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "koennen",
-          "english": "to be able to"
+          "translation": "koennen"
         },
         {
+          "english": "to startle",
+          "language": "german",
           "pastParticiple": "erschrocken",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "erschrecken",
-          "english": "to startle"
+          "translation": "erschrecken"
         },
         {
+          "english": "to dig",
+          "language": "german",
           "pastParticiple": "gegraben",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "graben",
-          "english": "to dig"
+          "translation": "graben"
         },
         {
+          "english": "to turn",
+          "language": "german",
           "pastParticiple": "gewendet",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "wenden",
-          "english": "to turn"
+          "translation": "wenden"
         },
         {
+          "english": "to suffer",
+          "language": "german",
           "pastParticiple": "gelitten",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "leiden",
-          "english": "to suffer"
+          "translation": "leiden"
         },
         {
+          "english": "to find",
+          "language": "german",
           "pastParticiple": "gefunden",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "finden",
-          "english": "to find"
+          "translation": "finden"
         },
         {
+          "english": "to stroke",
+          "language": "german",
           "pastParticiple": "gestrichen",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "streichen",
-          "english": "to stroke"
+          "translation": "streichen"
         },
         {
+          "english": "to push",
+          "language": "german",
           "pastParticiple": "gestossen",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "stossen",
-          "english": "to push"
+          "translation": "stossen"
         },
         {
+          "english": "to smell",
+          "language": "german",
           "pastParticiple": "gerochen",
-          "language": "german",
           "auxVerb": "haben",
-          "translation": "riechen",
-          "english": "to smell"
+          "translation": "riechen"
         },
         {
-          "pastParticiple": "gedurft",
+          "english": "to be allowed to",
           "language": "german",
+          "pastParticiple": "gedurft",
           "auxVerb": "haben",
-          "translation": "duerfen",
-          "english": "to be allowed to"
+          "translation": "duerfen"
         }
       ],
+      "nouns": []
+    },
+    {
       "language": "german",
-      "topic": "liste2"
+      "topic": "liste3",
+      "verbs": [
+        {
+          "english": "to bind",
+          "language": "german",
+          "pastParticiple": "gebunden",
+          "auxVerb": "haben",
+          "translation": "binden"
+        },
+        {
+          "english": "to offer",
+          "language": "german",
+          "pastParticiple": "geboten",
+          "auxVerb": "haben",
+          "translation": "bieten"
+        },
+        {
+          "english": "to freeze",
+          "language": "german",
+          "pastParticiple": "gefroren",
+          "auxVerb": "sein",
+          "translation": "frieren"
+        },
+        {
+          "english": "to do",
+          "language": "german",
+          "pastParticiple": "getan",
+          "auxVerb": "haben",
+          "translation": "tun"
+        },
+        {
+          "english": "to be successful",
+          "language": "german",
+          "pastParticiple": "gelungen",
+          "auxVerb": "sein",
+          "translation": "gelingen"
+        },
+        {
+          "english": "to take",
+          "language": "german",
+          "pastParticiple": "genommen",
+          "auxVerb": "haben",
+          "translation": "nehmen"
+        },
+        {
+          "english": "to sleep",
+          "language": "german",
+          "pastParticiple": "geschlafen",
+          "auxVerb": "haben",
+          "translation": "schlafen"
+        }
+      ],
+      "nouns": []
     }
   ]
 }
