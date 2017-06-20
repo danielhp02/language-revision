@@ -143,7 +143,6 @@ def print_words_in_set(language, topic):
         print("Nouns:")
         for n in aSet.nouns:
             print(n.translation, '-', n.english)
-            print("hey")
         print("Verbs:")
         for v in aSet.verbs:
             print(v.translation, '-', v.english)
