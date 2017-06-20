@@ -71,31 +71,34 @@ def save_words():
         json.dump(jsonFormat, fp=output, indent=2)
     print(inout.coloured("Words saved.", "magenta"))
 
-def findSet(language, topic, createSet=True):
+def findSet(language, topic, quiet, createSet=True):
     found = None
     for s in wordSets:
         # print(s.topic)
         if s.topic == topic:
             found = s
-            print(inout.coloured("Set found for topic '" + topic + "'.", 'magenta'))
+            if not quiet:
+                print(inout.coloured("Set found for topic '" + topic + "'.", 'magenta'))
             break
     else:
-        print(inout.coloured("Set for topic '" + topic + "' not found.", 'magenta'))
+        if not quiet:
+            print(inout.coloured("Set for topic '" + topic + "' not found.", 'magenta'))
         if createSet:
             add_set(language, topic, [], [])
             return wordSets[-1]
     return found
 
-# make searches quiet (or not)
-def findWord(aSet, english): # Need to update
+def findWord(aSet, english, quiet): # Need to update
     found = None
     for i, w in enumerate(aSet.words):
         if w.english == english:
             found = i
-            print(inout.coloured("Word '" + english + "' found in set '" + topic + "'.", 'magenta'))
+            if not quiet:
+                print(inout.coloured("Word '" + english + "' found in set '" + topic + "'.", 'magenta'))
             break
     else:
-        print(inout.coloured("Word '" + english + "' not found in set '" + topic + "'.", 'magenta'))
+        if not quiet:
+            print(inout.coloured("Word '" + english + "' not found in set '" + topic + "'.", 'magenta'))
         return None
     return found
 
