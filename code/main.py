@@ -104,7 +104,7 @@ def findWord(aSet, english, quiet): # Need to update
 
 def add_noun(english, language, translation, gender, topic=None, quiet=False):
     if topic is not None:
-        wSet = findSet(language, topic, False)
+        wSet = findSet(language, topic, quiet, False)
         if wSet is not None:
             wSet.nouns.append(objects.Noun(english, language, translation, gender))
             if not quiet:
@@ -116,7 +116,7 @@ def add_noun(english, language, translation, gender, topic=None, quiet=False):
 
 def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None, quiet=False):
     if topic is not None:
-        wSet = findSet(language, topic)
+        wSet = findSet(language, topic, quiet)
         if wSet is not None:
             wSet.verbs.append(objects.Verb(english, language, translation, pastParticiple, auxVerb))
             if not quiet:
@@ -138,7 +138,7 @@ def remove_duplicates(seq):
     return [x for x in seq if not (x in seen or seen_add(x))]
 
 def print_words_in_set(language, topic):
-    aSet = findSet(language, topic, False)
+    aSet = findSet(language, topic, quiet, False)
     if aSet is not None:
         print("Nouns:")
         for n in aSet.nouns:
@@ -178,15 +178,15 @@ try:
 
             elif action.split()[1] == 'french':
                 if action.split()[2] == 'verbs':
-                    quiz.verbs(findSet('french', action.split()[3].lower()))
+                    quiz.verbs(findSet('french', action.split()[3].lower(), quiet))
                 elif action.split()[2] == 'nouns':
-                    quiz.nouns(findSet('french', action.split()[3].lower()))
+                    quiz.nouns(findSet('french', action.split()[3].lower(), quiet))
 
             elif action.split()[1] == 'german':
                 if action.split()[2] == 'verbs':
-                    quiz.verbs(findSet('german', action.split()[3].lower()))
+                    quiz.verbs(findSet('german', action.split()[3].lower(), quiet))
                 elif action.split()[2] == 'nouns':
-                    quiz.nouns(findSet('german', action.split()[3].lower()))
+                    quiz.nouns(findSet('german', action.split()[3].lower(), quiet))
 
         elif action.split()[0] == 'print': # language, topic
             print_words_in_set(action.split()[1], action.split()[2])
