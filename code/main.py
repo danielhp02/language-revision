@@ -4,6 +4,7 @@ from random import randint
 import json
 import os
 import sys
+import readline
 
 import objects, inout
 
