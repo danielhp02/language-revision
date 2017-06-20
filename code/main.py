@@ -85,6 +85,7 @@ def findSet(language, topic, createSet=True):
             return wordSets[-1]
     return found
 
+# make searches quiet (or not)
 def findWord(aSet, english): # Need to update
     found = None
     for i, w in enumerate(aSet.words):

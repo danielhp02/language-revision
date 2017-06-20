@@ -65,6 +65,7 @@ class Quiz(object):
 
     def verbs(self, aSet): # At the moment, this is for past prticiples. A conjugation quiz will be added soon
         deck = self.randomise(len(aSet.verbs))
+        numberOfQuestions = len(deck)
         auxiliaryVerbs = ['haben', 'sein'] if aSet.language == 'german' else ['avoir', 'etre'] # Not very flexible, I know. Will update. 'ê' is intentionally left out.
 
         while True:
@@ -82,7 +83,8 @@ class Quiz(object):
                 self.score = 0
                 return
 
-            textIn = input(inout.coloured("What is the past participle of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
+            print(inout.coloured("Question " + str(numberOfQuestions - len(deck)) + ":", 'cyan'))
+            textIn = input(inout.coloured("a) What is the past participle of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
             if textIn == 'exit':
                 return
             elif textIn == aSet.verbs[index].pastParticiple:
@@ -91,7 +93,7 @@ class Quiz(object):
             else:
                 print(inout.coloured("Incorrect! The answer was " + aSet.verbs[index].pastParticiple + ".", 'red'))
 
-            textIn = input(inout.coloured("Does '" + aSet.verbs[index].pastParticiple + "' use " + auxiliaryVerbs[0] + " or " + auxiliaryVerbs[1] +"? ", 'cyan', True)).lower()
+            textIn = input(inout.coloured("b) Does '" + aSet.verbs[index].pastParticiple + "' use " + auxiliaryVerbs[0] + " or " + auxiliaryVerbs[1] +"? ", 'cyan', True)).lower()
             if textIn == 'exit':
                 return
             elif textIn == aSet.verbs[index].auxVerb:
@@ -100,7 +102,7 @@ class Quiz(object):
             else:
                 print(inout.coloured("Incorrect! The answer was " + aSet.verbs[index].auxVerb + ".", 'red'))
 
-            textIn = input(inout.coloured("What is the english translation of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
+            textIn = input(inout.coloured("c) What is the english translation of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
             if textIn == 'exit':
                 return
             elif textIn == aSet.verbs[index].english:
