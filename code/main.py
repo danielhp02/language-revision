@@ -147,6 +147,13 @@ def print_words_in_set(language, topic):
         for v in aSet.verbs:
             print(v.translation, '-', v.english)
 
+def remove_history_items(num):
+    """
+    Call after input to be removed.
+    """
+    for i in range(num):
+        readline.remove_history_item(readline.get_current_history_length() - 1)
+
 load_words()
 quiz = objects.Quiz()
 
@@ -164,11 +171,13 @@ try:
                 type = input(inout.coloured("What type of word is this? (noun/verb) ", 'magenta', True)).lower()
                 if type == 'noun':
                     gender = input(inout.coloured("What is the gender of this noun? ", 'magenta', True)).lower()
+                    remove_history_items(6)
 
                     add_noun(english, language, translation, gender, topic)
                 elif type == 'verb':
                     pastParticiple = input(inout.coloured("What is the past participle of this verb? ", 'magenta', True)).lower()
                     auxVerb = input(inout.coloured("What auxiliary verb does this verb use? ", 'magenta', True)).lower()
+                    remove_history_items(7)
 
                     add_verb(english, language, translation, pastParticiple, auxVerb, topic)
 
