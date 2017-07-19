@@ -48,6 +48,7 @@ class Quiz(object):
 
             textIn = input(inout.coloured("What is the gender of '" + aSet.nouns[index].translation + "'? ", 'cyan', True)).lower()
             if textIn == 'exit':
+                inout.remove_history_items(questionNumber*3-1)
                 return
             elif textIn == aSet.nouns[index].gender:
                 print(inout.coloured("Correct!", 'green'))
@@ -57,6 +58,7 @@ class Quiz(object):
 
             textIn = input(inout.coloured("What is that in English? ", 'cyan', True)).lower()
             if textIn == "exit":
+                inout.remove_history_items(questionNumber*3)
                 return
             elif textIn == aSet.nouns[index].english:
                 print(inout.coloured("Correct!", 'green'))
@@ -72,6 +74,7 @@ class Quiz(object):
         while True:
             try:
                 index = deck.pop()
+                questionNumber = numberOfQuestions - len(deck)
             except IndexError:
                 self.score = float(self.score/3) # 3 is the number of quesions for each verb
                 highestPossibleScore = str(len(aSet.verbs))
@@ -82,12 +85,13 @@ class Quiz(object):
                 elif self.score < 1000:
                     print(inout.coloured("Round over! Your score that round was " + '%.4g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
                 self.score = 0
-                inout.remove_history_items(len(aSet.verbs))
+                inout.remove_history_items(questionNumber*3)
                 return
 
-            print(inout.coloured("Question " + str(numberOfQuestions - len(deck)) + ":", 'cyan'))
+            print(inout.coloured("Question " + str(questionNumber) + ":", 'cyan'))
             textIn = input(inout.coloured("a) What is the past participle of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
             if textIn == 'exit':
+                inout.remove_history_items(questionNumber*3-2)
                 return
             elif textIn == aSet.verbs[index].pastParticiple:
                 print(inout.coloured("Correct!", 'green'))
@@ -97,6 +101,7 @@ class Quiz(object):
 
             textIn = input(inout.coloured("b) Does '" + aSet.verbs[index].pastParticiple + "' use " + auxiliaryVerbs[0] + " or " + auxiliaryVerbs[1] +"? ", 'cyan', True)).lower()
             if textIn == 'exit':
+                inout.remove_history_items(questionNumber*3-1)
                 return
             elif textIn == aSet.verbs[index].auxVerb:
                 print(inout.coloured("Correct!", 'green'))
@@ -106,6 +111,7 @@ class Quiz(object):
 
             textIn = input(inout.coloured("c) What is the english translation of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
             if textIn == 'exit':
+                inout.remove_history_items(questionNumber*3)
                 return
             elif textIn == aSet.verbs[index].english:
                 print(inout.coloured("Correct!", 'green'))
