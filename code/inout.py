@@ -1,3 +1,5 @@
+import readline
+
 def coloured(text, colour, bold=False):
     # Blue is main UI
     # Yellow is for warnings
@@ -39,5 +41,12 @@ def coloured(text, colour, bold=False):
             return '\u001b[36;1m' + text + reset
         elif colour == 'white':
             return '\u001b[37;1m' + text + reset
+
+def remove_history_items(num):
+    """
+    Call after input to be removed.
+    """
+    for i in range(num):
+        readline.remove_history_item(readline.get_current_history_length() - 1)
 
 #NOTE add question function here
