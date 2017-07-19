@@ -43,6 +43,7 @@ class Quiz(object):
                 highestPossibleScore = str(len(aSet.nouns))
                 print(inout.coloured("\nRound over! Your score that round was " + '%g'%(self.score) + " out of " + highestPossibleScore + ".\n", 'cyan'))
                 self.score = 0
+                inout.remove_history_items(len(aSet.nouns))
                 return
 
             textIn = input(inout.coloured("What is the gender of '" + aSet.nouns[index].translation + "'? ", 'cyan', True)).lower()
@@ -81,6 +82,7 @@ class Quiz(object):
                 elif self.score < 1000:
                     print(inout.coloured("Round over! Your score that round was " + '%.4g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
                 self.score = 0
+                inout.remove_history_items(len(aSet.verbs))
                 return
 
             print(inout.coloured("Question " + str(numberOfQuestions - len(deck)) + ":", 'cyan'))
