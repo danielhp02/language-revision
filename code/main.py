@@ -31,20 +31,30 @@ def load_words():
         for ws in sets_dict:
             if not quiet:
                 print(inout.coloured("Loading set of topic: " + ws['topic'], 'magenta'))
-            noun_list = []
-            if len(ws["nouns"]) > 0:
+            # noun_list = []
+            # if len(ws["nouns"]) > 0:
+            #     if not quiet:
+            #         print(inout.coloured("Loading nouns of topic: " + ws['topic'], 'magenta'))
+            #     for n in ws["nouns"]:
+            #         noun_list.append(add_noun(n["english"], n["language"], n['translation'], n["gender"], quiet=quiet))
+            # verb_list = []
+            # if len(ws["verbs"]) > 0:
+            #     if not quiet:
+            #         print(inout.coloured("Loading verbs of topic: " + ws['topic'], 'magenta'))
+            #     for v in ws["verbs"]:
+            #         verb_list.append(add_verb(v["english"], v["language"], v['translation'], v["pastParticiple"], v["auxVerb"], quiet=quiet))
+            #
+            # add_set(ws["language"], ws["topic"], noun_list, verb_list, True)
+            word_list = []
+            if len(ws["words"]) > 0:
                 if not quiet:
-                    print(inout.coloured("Loading nouns of topic: " + ws['topic'], 'magenta'))
-                for n in ws["nouns"]:
-                    noun_list.append(add_noun(n["english"], n["language"], n['translation'], n["gender"], quiet=quiet))
-            verb_list = []
-            if len(ws["verbs"]) > 0:
-                if not quiet:
-                    print(inout.coloured("Loading verbs of topic: " + ws['topic'], 'magenta'))
-                for v in ws["verbs"]:
-                    verb_list.append(add_verb(v["english"], v["language"], v['translation'], v["pastParticiple"], v["auxVerb"], quiet=quiet))
-
-            add_set(ws["language"], ws["topic"], noun_list, verb_list, True)
+                    print(inout.coloured("Loading words of topic: " + ws['topic'], 'magenta'))
+                for w in ws["words"]:
+                    if w["type"] == "noun":
+                        word_list.append(add_noun(w["english"], w["language"], w['translation'], w["gender"], quiet=quiet))
+                    elif w["type"] == "verb":
+                        word_list.append(add_verb(w["english"], w["language"], w['translation'], w["pastParticiple"], w["auxVerb"], quiet=quiet))
+            add_set(ws["language"], ws["topic"], word_list, True)
             if not quiet:
                 print(inout.coloured(ws['topic'] + " successfully loaded.", 'magenta'))
     except FileNotFoundError: # Create file if not found
@@ -52,7 +62,7 @@ def load_words():
             print(inout.coloured("Failed to find file '" + words_filepath + "'.", 'yellow'))
         with open(words_filepath, 'w') as output:
             json.dump({}, output, -1, indent=2)
-    except KeyError: # If there is nothing in objects
+    except KeyError: # If there is nothing in words
         print(inout.coloured("You need to add some words.\nDon't forget to save!", 'yellow'))
 
 def save_words():
@@ -60,13 +70,10 @@ def save_words():
 
     jsonFormat = {"sets": []}
     for ws in wordSets:
-        nouns = []
-        verbs = []
-        for w in ws.nouns:
-            words.append(w.__dict__)
-        for w in ws.verbs:
-            verbs.append(w.__dict__)
-        jsonFormat["sets"].append({"language": ws.language, "topic": ws.topic, "nouns": nouns, "verbs": verbs})
+        word_list = []
+        for w in ws.words:
+            word_list.append(w.__dict__)
+        jsonFormat["sets"].append({"language": ws.language, "topic": ws.topic, "words": word_list})
     with open(words_filepath, 'w') as output:
         json.dump(jsonFormat, fp=output, indent=2)
     print(inout.coloured("Words saved.", "magenta"))
@@ -106,7 +113,7 @@ def add_noun(english, language, translation, gender, topic=None, quiet=False):
     if topic is not None:
         wSet = findSet(language, topic, quiet, False)
         if wSet is not None:
-            wSet.nouns.append(objects.Noun(english, language, translation, gender))
+            wSet.words.append(objects.Noun(english, language, translation, gender))
             if not quiet:
                 print(inout.coloured("Noun successfully added to set '" + topic + "'.", 'magenta'))
     else:
@@ -118,7 +125,7 @@ def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None
     if topic is not None:
         wSet = findSet(language, topic, quiet)
         if wSet is not None:
-            wSet.verbs.append(objects.Verb(english, language, translation, pastParticiple, auxVerb))
+            wSet.words.append(objects.Verb(english, language, translation, pastParticiple, auxVerb))
             if not quiet:
                 print(inout.coloured("Verb successfully added to set '" + topic + "'.", 'magenta'))
     else:
@@ -126,9 +133,9 @@ def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None
             print(inout.coloured("Verb successfully added.", 'magenta'))
         return objects.Verb(english, language, translation, pastParticiple, auxVerb)
 
-def add_set(language, topic, nouns, verbs, quiet=False):
+def add_set(language, topic, words, quiet=False):
     global wordSets
-    wordSets.append(objects.WordSet(language, topic, nouns, verbs))
+    wordSets.append(objects.WordSet(language, topic, words))
     if not quiet:
         print(inout.coloured("New topic "+topic+" created.", 'magenta'))
 
@@ -140,12 +147,12 @@ def remove_duplicates(seq):
 def print_words_in_set(language, topic):
     aSet = findSet(language, topic, quiet, False)
     if aSet is not None:
-        print("Nouns:")
-        for n in aSet.nouns:
-            print(n.translation, '-', n.english)
-        print("Verbs:")
-        for v in aSet.verbs:
-            print(v.translation, '-', v.english)
+        # print("Nouns:")
+        # for n in aSet.nouns:
+        #     print(n.translation, '-', n.english)
+        print("Words:")
+        for w in aSet.words:
+            print(w.translation, '-', w.english)
 
 load_words()
 quiz = objects.Quiz()

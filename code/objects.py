@@ -11,6 +11,7 @@ class Noun(object):
         self.language = language
         self.translation = translation
         self.gender = gender
+        self.type = "noun"
 
 class Verb(object):
     def __init__(self, english, language, translation, pastParticiple, auxVerb):
@@ -19,13 +20,15 @@ class Verb(object):
         self.translation = translation
         self.pastParticiple = pastParticiple
         self.auxVerb = auxVerb
+        self.type = "verb"
+
+# class 
 
 class WordSet(object):
-    def __init__(self, language, topic, nouns, verbs):
+    def __init__(self, language, topic, words):
         self.language = language
         self.topic = topic
-        self.nouns = nouns
-        self.verbs = verbs
+        self.words = words
 
 class Question(object):
     def __init__(self, record_history, colour):
@@ -137,7 +140,8 @@ class Quiz(object):
         self.exit = False
 
     def verbs(self, aSet): # At the moment, this is for past prticiples. A conjugation quiz will be added soon
-        deck = self.randomise(len(aSet.verbs))
+        verbs = [w for w in aSet.words if w.type == "verb"]
+        deck = self.randomise(len(verbs))
         numberOfQuestions = len(deck)
 
         while self.exit is False:
@@ -145,15 +149,15 @@ class Quiz(object):
                 index = deck.pop()
                 questionNumber = numberOfQuestions - len(deck)
             except IndexError:
-                self.displayScore(3, len(aSet.verbs))
+                self.displayScore(3, len(verbs))
                 return
 
             print(inout.coloured("Question " + str(questionNumber) + ":", 'cyan'))
-            self.pastParticipleQuestion(aSet.verbs[index], 'a')
+            self.pastParticipleQuestion(verbs[index], 'a')
 
-            self.auxiliaryVerbQuestion(aSet.verbs[index], 'b')
+            self.auxiliaryVerbQuestion(verbs[index], 'b')
 
-            self.translationQuestion(aSet.verbs[index], 'c')
+            self.translationQuestion(verbs[index], 'c')
 
             print()
 

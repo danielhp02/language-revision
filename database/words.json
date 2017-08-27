@@ -1,0 +1,26 @@
+{
+  "sets": [
+    {
+      "words": [
+        {
+          "type": "verb",
+          "auxVerb": "sein",
+          "english": "to happen",
+          "pastParticiple": "geschehen",
+          "translation": "geschehen",
+          "language": "german"
+        },
+        {
+          "type": "verb",
+          "auxVerb": "haben",
+          "english": "to write",
+          "pastParticiple": "geschrieben",
+          "translation": "schreiben",
+          "language": "german"
+        }
+      ],
+      "language": "german",
+      "topic": "liste1"
+    }
+  ]
+}
