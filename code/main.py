@@ -139,10 +139,10 @@ def add_set(language, topic, words, quiet=False):
     if not quiet:
         print(inout.coloured("New topic "+topic+" created.", 'magenta'))
 
-def remove_duplicates(seq):
-    seen = set()
-    seen_add = seen.add
-    return [x for x in seq if not (x in seen or seen_add(x))]
+# def remove_duplicates(seq):
+#     seen = set()
+#     seen_add = seen.add
+#     return [x for x in seq if not (x in seen or seen_add(x))]
 
 def print_words_in_set(language, topic):
     aSet = findSet(language, topic, quiet, False)

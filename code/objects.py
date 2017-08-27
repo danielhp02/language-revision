@@ -22,7 +22,12 @@ class Verb(object):
         self.auxVerb = auxVerb
         self.type = "verb"
 
-# class 
+class Adjective(object):
+    def __init__(self, english, language, translation):
+        self.english = english
+        self.language = language
+        self.translation = translation
+        self.type = "adjective"
 
 class WordSet(object):
     def __init__(self, language, topic, words):
@@ -118,8 +123,8 @@ class Quiz(object):
                 print(inout.coloured("Incorrect! The answer was " + verb.auxVerb + ".", 'red'))
             inout.remove_history_items(1)
 
-    def nouns(self, aSet):
-        deck = self.randomise(len(aSet.nouns))
+    def vocab(self, aSet):
+        deck = self.randomise(len(nouns))
         numberOfQuestions = len(deck)
 
         while self.exit is False:
@@ -127,17 +132,37 @@ class Quiz(object):
                 index = deck.pop()
                 questionNumber = numberOfQuestions - len(deck)
             except IndexError:
-                self.displayScore(2, len(aSet.nouns))
+                self.displayScore(2, len(nouns))
+                self.exit = False
                 return
 
             print(inout.coloured("Question " + str(questionNumber) + ":", 'cyan'))
-            self.translationQuestion(aSet.nouns[index], 'a')
+            if aSet.words[index].type == "noun"
+                self.translationQuestion(aSet.words[index], "a")
+                self.genderQuestion(aSet.words[index], "b")
+            else:
+                self.translationQuestion(aSet.words[index])
 
-            self.genderQuestion(aSet.nouns[index], 'b')
+    def nouns(self, aSet):
+        nouns = [w for w in aSet.words if w.type == "noun"]
+        deck = self.randomise(len(nouns))
+        numberOfQuestions = len(deck)
+
+        while self.exit is False:
+            try:
+                index = deck.pop()
+                questionNumber = numberOfQuestions - len(deck)
+            except IndexError:
+                self.displayScore(2, len(nouns))
+                self.exit = False
+                return
+
+            print(inout.coloured("Question " + str(questionNumber) + ":", 'cyan'))
+            self.translationQuestion(nouns[index], 'a')
+
+            self.genderQuestion(nouns[index], 'b')
 
             print()
-
-        self.exit = False
 
     def verbs(self, aSet): # At the moment, this is for past prticiples. A conjugation quiz will be added soon
         verbs = [w for w in aSet.words if w.type == "verb"]
@@ -150,6 +175,7 @@ class Quiz(object):
                 questionNumber = numberOfQuestions - len(deck)
             except IndexError:
                 self.displayScore(3, len(verbs))
+                self.exit = False
                 return
 
             print(inout.coloured("Question " + str(questionNumber) + ":", 'cyan'))
