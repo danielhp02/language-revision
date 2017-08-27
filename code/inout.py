@@ -44,12 +44,9 @@ def coloured(text, colour, bold=False):
 
 def remove_history_items(num):
     """
-    Call after the input to be removed.
+    Call after input to be removed.
     """
-    try:
-        for i in range(num):
-            readline.remove_history_item(readline.get_current_history_length() - 1)
-    except ValueError:
-        return
+    for i in range(num):
+        readline.remove_history_item(readline.get_current_history_length() - 1)
 
 #NOTE add question function here
