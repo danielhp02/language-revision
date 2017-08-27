@@ -8,11 +8,8 @@ import readline
 
 import objects, inout
 
-# if __file__ == 'main.py':
-words_filepath = '../database/words.json'
-
 if len(sys.argv) > 1:
-    if sys.argv[1] == 'v':
+    if sys.argv[1] == '-v':
         quiet = False
     else:
         quiet = True
@@ -20,6 +17,9 @@ else:
     quiet = True
 
 wordSets = []
+
+# if __file__ == 'main.py':
+words_filepath = '../database/words.json'
 
 def load_words():
     global wordSets
