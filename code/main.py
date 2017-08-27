@@ -31,20 +31,6 @@ def load_words():
         for ws in sets_dict:
             if not quiet:
                 print(inout.coloured("Loading set of topic: " + ws['topic'], 'magenta'))
-            # noun_list = []
-            # if len(ws["nouns"]) > 0:
-            #     if not quiet:
-            #         print(inout.coloured("Loading nouns of topic: " + ws['topic'], 'magenta'))
-            #     for n in ws["nouns"]:
-            #         noun_list.append(add_noun(n["english"], n["language"], n['translation'], n["gender"], quiet=quiet))
-            # verb_list = []
-            # if len(ws["verbs"]) > 0:
-            #     if not quiet:
-            #         print(inout.coloured("Loading verbs of topic: " + ws['topic'], 'magenta'))
-            #     for v in ws["verbs"]:
-            #         verb_list.append(add_verb(v["english"], v["language"], v['translation'], v["pastParticiple"], v["auxVerb"], quiet=quiet))
-            #
-            # add_set(ws["language"], ws["topic"], noun_list, verb_list, True)
             word_list = []
             if len(ws["words"]) > 0:
                 if not quiet:
@@ -54,6 +40,9 @@ def load_words():
                         word_list.append(add_noun(w["english"], w["language"], w['translation'], w["gender"], quiet=quiet))
                     elif w["type"] == "verb":
                         word_list.append(add_verb(w["english"], w["language"], w['translation'], w["pastParticiple"], w["auxVerb"], quiet=quiet))
+                    elif w["type"] == "adjective":
+                        word_list.append(add_adjective(w["english"], w["language"], w['translation'], quiet=quiet))
+
             add_set(ws["language"], ws["topic"], word_list, True)
             if not quiet:
                 print(inout.coloured(ws['topic'] + " successfully loaded.", 'magenta'))
@@ -78,7 +67,7 @@ def save_words():
         json.dump(jsonFormat, fp=output, indent=2)
     print(inout.coloured("Words saved.", "magenta"))
 
-def findSet(language, topic, quiet, createSet=True):
+def findSet(topic, quiet, language=None, createSet=True):
     found = None
     for s in wordSets:
         # print(s.topic)
@@ -90,7 +79,7 @@ def findSet(language, topic, quiet, createSet=True):
     else:
         if not quiet:
             print(inout.coloured("Set for topic '" + topic + "' not found.", 'magenta'))
-        if createSet:
+        if createSet and language is not None:
             add_set(language, topic, [], [])
             return wordSets[-1]
     return found
@@ -109,9 +98,21 @@ def findWord(aSet, english, quiet): # Need to update
         return None
     return found
 
+def add_adjective(english, language, translation, topic=None, quiet=False):
+    if topic is not None:
+        wSet = findSet(topic, quiet, language)
+        if wSet is not None:
+            wSet.words.append(objects.Adjective(english, language, translation))
+            if not quiet:
+                print(inout.coloured("Adjective successfully added to set '" + topic + "'.", 'magenta'))
+    else:
+        if not quiet:
+            print(inout.coloured("Adjective successfully added.", 'magenta'))
+        return objects.Adjective(english, language, translation)
+
 def add_noun(english, language, translation, gender, topic=None, quiet=False):
     if topic is not None:
-        wSet = findSet(language, topic, quiet, False)
+        wSet = findSet(topic, quiet, language)
         if wSet is not None:
             wSet.words.append(objects.Noun(english, language, translation, gender))
             if not quiet:
@@ -123,7 +124,7 @@ def add_noun(english, language, translation, gender, topic=None, quiet=False):
 
 def add_verb(english, language, translation, pastParticiple, auxVerb, topic=None, quiet=False):
     if topic is not None:
-        wSet = findSet(language, topic, quiet)
+        wSet = findSet(topic, quiet, language)
         if wSet is not None:
             wSet.words.append(objects.Verb(english, language, translation, pastParticiple, auxVerb))
             if not quiet:
@@ -145,7 +146,7 @@ def add_set(language, topic, words, quiet=False):
 #     return [x for x in seq if not (x in seen or seen_add(x))]
 
 def print_words_in_set(language, topic):
-    aSet = findSet(language, topic, quiet, False)
+    aSet = findSet(topic, quiet, createSet=False)
     if aSet is not None:
         # print("Nouns:")
         # for n in aSet.nouns:
@@ -168,34 +169,41 @@ try:
                 translation = input(inout.coloured("What is the word in " + language + "? ", 'magenta', True)).lower()
                 topic = input(inout.coloured("What topic is this word in? ", 'magenta', True)).lower()
 
-                type = input(inout.coloured("What type of word is this? (noun/verb) ", 'magenta', True)).lower()
+                type = input(inout.coloured("What type of word is this? ", 'magenta', True)).lower()
                 if type == 'noun':
                     gender = input(inout.coloured("What is the gender of this noun? ", 'magenta', True)).lower()
-                    inout.remove_history_items(3)
+                    inout.remove_history_items(6)
 
                     add_noun(english, language, translation, gender, topic)
                 elif type == 'verb':
                     pastParticiple = input(inout.coloured("What is the past participle of this verb? ", 'magenta', True)).lower()
                     auxVerb = input(inout.coloured("What auxiliary verb does this verb use? ", 'magenta', True)).lower()
-                    inout.remove_history_items(4)
+                    inout.remove_history_items(6)
 
                     add_verb(english, language, translation, pastParticiple, auxVerb, topic)
+                elif type == 'adjective':
+                    inout.remove_history_items(4)
 
-            elif action.split()[0] == 'quiz': # needs language, type and topic
-                if len(action.split()) < 4:
+                    add_adjective(english, language, translation, topic)
+
+            elif action.split()[0] == 'quiz': # needs type and topic and possible limit
+                if len(action.split()) < 3:
                     print(inout.coloured("More info is needed to start a quiz.", 'yellow'))
 
-                elif action.split()[1] == 'french':
-                    if action.split()[2] == 'verbs':
-                        quiz.verbs(findSet('french', action.split()[3].lower(), quiet))
-                    elif action.split()[2] == 'nouns':
-                        quiz.nouns(findSet('french', action.split()[3].lower(), quiet))
-
-                elif action.split()[1] == 'german':
-                    if action.split()[2] == 'verbs':
-                        quiz.verbs(findSet('german', action.split()[3].lower(), quiet))
-                    elif action.split()[2] == 'nouns':
-                        quiz.nouns(findSet('german', action.split()[3].lower(), quiet))
+                if len(action.split()) == 3:
+                    if action.split()[1] == 'verbs':
+                        quiz.verbs(findSet(action.split()[2], quiet))
+                    elif action.split()[1] == 'nouns':
+                        quiz.nouns(findSet(action.split()[2], quiet))
+                    elif action.split()[1] == 'vocab':
+                        quiz.vocab(findSet(action.split()[2], quiet))
+                elif len(action.split()) == 4:
+                    if action.split()[1] == 'verbs':
+                        quiz.verbs(findSet(action.split()[2], quiet), action.split()[3])
+                    elif action.split()[1] == 'nouns':
+                        quiz.nouns(findSet(action.split()[2], quiet), action.split()[3])
+                    elif action.split()[1] == 'vocab':
+                        quiz.vocab(findSet(action.split()[2], quiet), action.split()[3])
 
             elif action.split()[0] == 'print': # language, topic
                 print_words_in_set(action.split()[1], action.split()[2])

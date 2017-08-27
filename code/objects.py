@@ -70,20 +70,20 @@ class Quiz(object):
     def displayQuestionLetter(self, letter):
         print(inout.coloured("{})".format(letter), "cyan"), end=' ')
 
-    def translationQuestion(self, word, letter=None):
+    def translationQuestion(self, word, letter=None, score=1):
         if self.exit is False:
             if letter is not None: self.displayQuestionLetter(letter)
-            textIn = input(inout.coloured("What is {} in English? ".format(word.translation), 'cyan', True)).lower()
+            textIn = input(inout.coloured("What is '{}' in English? ".format(word.translation), 'cyan', True)).lower()
             if textIn == "exit":
                 self.exit = True
             elif textIn == word.english:
                 print(inout.coloured("Correct!", 'green'))
-                self.score += 1
+                self.score += score
             else:
                 print(inout.coloured("Incorrect! The answer was " + word.english + "." + ".", 'red'))
-            inout.remove_history_items(1)
+            if len(textIn) > 0: inout.remove_history_items(1)
 
-    def genderQuestion(self, noun, letter=None):
+    def genderQuestion(self, noun, letter=None, score=1):
         if self.exit is False:
             if letter is not None: self.displayQuestionLetter(letter)
             textIn = input(inout.coloured("What is the gender of '" + noun.translation + "'? ", 'cyan', True)).lower()
@@ -91,12 +91,12 @@ class Quiz(object):
                 self.exit = True
             elif textIn == noun.gender:
                 print(inout.coloured("Correct!", 'green'))
-                self.score += 1
+                self.score += score
             else:
                 print(inout.coloured("Incorrect! The answer was " + noun.gender + ".", 'red'))
-            inout.remove_history_items(1)
+            if len(textIn) > 0: inout.remove_history_items(1)
 
-    def pastParticipleQuestion(self, verb, letter=None):
+    def pastParticipleQuestion(self, verb, letter=None, score=1):
         if self.exit is False:
             if letter is not None: self.displayQuestionLetter(letter)
             textIn = input(inout.coloured("What is the past participle of '" + verb.translation + "'? ", 'cyan', True)).lower()
@@ -104,12 +104,12 @@ class Quiz(object):
                 self.exit = True
             elif textIn == verb.pastParticiple:
                 print(inout.coloured("Correct!", 'green'))
-                self.score += 1
+                self.score += score
             else:
                 print(inout.coloured("Incorrect! The answer was " + verb.pastParticiple + ".", 'red'))
-            inout.remove_history_items(1)
+            if len(textIn) > 0: inout.remove_history_items(1)
 
-    def auxiliaryVerbQuestion(self, verb, letter=None):
+    def auxiliaryVerbQuestion(self, verb, letter=None, score=1):
         auxiliaryVerbs = ['haben', 'sein'] if verb.language == 'german' else ['avoir', 'être'] # Shift-AltGr-6 release e for ê
         if self.exit is False:
             if letter is not None: self.displayQuestionLetter(letter)
@@ -118,13 +118,15 @@ class Quiz(object):
                 self.exit = True
             elif textIn == verb.auxVerb:
                 print(inout.coloured("Correct!", 'green'))
-                self.score += 1
+                self.score += score
             else:
                 print(inout.coloured("Incorrect! The answer was " + verb.auxVerb + ".", 'red'))
-            inout.remove_history_items(1)
+            if len(textIn) > 0: inout.remove_history_items(1)
 
-    def vocab(self, aSet):
-        deck = self.randomise(len(nouns))
+    def vocab(self, aSet, quizLength=0): # 0 is no length limit
+        quizLength = int(quizLength)
+        deck = self.randomise(len(aSet.words))
+        if quizLength > 0: deck = deck[:quizLength]
         numberOfQuestions = len(deck)
 
         while self.exit is False:
@@ -132,18 +134,23 @@ class Quiz(object):
                 index = deck.pop()
                 questionNumber = numberOfQuestions - len(deck)
             except IndexError:
-                self.displayScore(2, len(nouns))
+                self.displayScore(1, numberOfQuestions)
                 self.exit = False
                 return
 
             print(inout.coloured("Question " + str(questionNumber) + ":", 'cyan'))
-            if aSet.words[index].type == "noun"
-                self.translationQuestion(aSet.words[index], "a")
-                self.genderQuestion(aSet.words[index], "b")
+            if aSet.words[index].type == "noun":
+                self.translationQuestion(aSet.words[index], "a", 0.5)
+                self.genderQuestion(aSet.words[index], "b", 0.5)
             else:
                 self.translationQuestion(aSet.words[index])
 
-    def nouns(self, aSet):
+            print()
+
+        self.exit = False
+
+    def nouns(self, aSet, quizLength=0):
+        quizLength = int(quizLength)
         nouns = [w for w in aSet.words if w.type == "noun"]
         deck = self.randomise(len(nouns))
         numberOfQuestions = len(deck)
@@ -153,7 +160,7 @@ class Quiz(object):
                 index = deck.pop()
                 questionNumber = numberOfQuestions - len(deck)
             except IndexError:
-                self.displayScore(2, len(nouns))
+                self.displayScore(2, numberOfQuestions)
                 self.exit = False
                 return
 
@@ -164,7 +171,10 @@ class Quiz(object):
 
             print()
 
-    def verbs(self, aSet): # At the moment, this is for past prticiples. A conjugation quiz will be added soon
+        self.exit = False
+
+    def verbs(self, aSet, quizLength=0): # At the moment, this is for past prticiples. A conjugation quiz will be added soon
+        quizLength = int(quizLength)
         verbs = [w for w in aSet.words if w.type == "verb"]
         deck = self.randomise(len(verbs))
         numberOfQuestions = len(deck)
@@ -174,7 +184,7 @@ class Quiz(object):
                 index = deck.pop()
                 questionNumber = numberOfQuestions - len(deck)
             except IndexError:
-                self.displayScore(3, len(verbs))
+                self.displayScore(3, numberOfQuestions)
                 self.exit = False
                 return
 

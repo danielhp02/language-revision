@@ -1,26 +1,53 @@
 {
   "sets": [
     {
+      "language": "german",
+      "topic": "liste1",
       "words": [
         {
-          "type": "verb",
+          "language": "german",
           "auxVerb": "sein",
-          "english": "to happen",
           "pastParticiple": "geschehen",
           "translation": "geschehen",
-          "language": "german"
+          "type": "verb",
+          "english": "to happen"
         },
         {
-          "type": "verb",
+          "language": "german",
           "auxVerb": "haben",
-          "english": "to write",
           "pastParticiple": "geschrieben",
           "translation": "schreiben",
-          "language": "german"
+          "type": "verb",
+          "english": "to write"
         }
-      ],
+      ]
+    },
+    {
       "language": "german",
-      "topic": "liste1"
+      "topic": "gesundheit",
+      "words": [
+        {
+          "language": "german",
+          "gender": "n",
+          "translation": "knie",
+          "type": "noun",
+          "english": "knee"
+        },
+        {
+          "language": "german",
+          "auxVerb": "haben",
+          "pastParticiple": "gebrochen",
+          "translation": "brechen",
+          "type": "verb",
+          "english": "to break"
+        },
+        {
+          "language": "german",
+          "translation": "tot",
+          "type": "adjective",
+          "english": "dead"
+        }
+      ]
     }
   ]
 }
