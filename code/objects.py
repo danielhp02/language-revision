@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from random import sample
+import sys
 import inout
+import readline
 
 class Noun(object):
     def __init__(self, english, language, translation, gender):
@@ -25,98 +27,134 @@ class WordSet(object):
         self.nouns = nouns
         self.verbs = verbs
 
+class Question(object):
+    def __init__(self, record_history, colour):
+        self.record_history = record_history
+        self.colour = colour
+
+    def eraseFromMemory(self):
+        inout.remove_history_items(1)
+
+    def ask(self, textIn):
+        textIn = input(inout.coloured(textIn + ' ', self.colour, True)).lower()
+        if self.record_history is False: self.eraseFromMemory()
+        return textIn
+
 class Quiz(object):
     def __init__(self):
         self.score = 0
+        self.exit = False
 
     def randomise(self, length):
         return sample(range(length), len(range(length)))
 
-    def nouns(self, aSet): # NOTE: add new features from verb quiz to noun quiz
-        deck = self.randomise(len(aSet.nouns))
+    def displayScore(self, divisor, length):
+        self.score /= divisor
+        highestPossibleScore = str(length)
+        if self.score < 10:
+            print(inout.coloured("Round over! Your score that round was " + '%.2g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
+        elif self.score < 100:
+            print(inout.coloured("Round over! Your score that round was " + '%.3g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
+        elif self.score < 1000:
+            print(inout.coloured("Round over! Your score that round was " + '%.4g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
+        self.score = 0
 
-        while True:
-            try:
-                index = deck.pop()
-            except IndexError:
-                self.score = float(self.score/2)
-                highestPossibleScore = str(len(aSet.nouns))
-                print(inout.coloured("\nRound over! Your score that round was " + '%g'%(self.score) + " out of " + highestPossibleScore + ".\n", 'cyan'))
-                self.score = 0
-                inout.remove_history_items(len(aSet.nouns))
-                return
+    def displayQuestionLetter(self, letter):
+        print(inout.coloured("{})".format(letter), "cyan"), end=' ')
 
-            textIn = input(inout.coloured("What is the gender of '" + aSet.nouns[index].translation + "'? ", 'cyan', True)).lower()
-            if textIn == 'exit':
-                inout.remove_history_items(questionNumber*3-1)
-                return
-            elif textIn == aSet.nouns[index].gender:
-                print(inout.coloured("Correct!", 'green'))
-                self.score += 1 # Half point, 1 so it's not adding floats
-            else:
-                print(inout.coloured("Incorrect! The answer was " + aSet.nouns[index].gender + ".", 'red'))
-
-            textIn = input(inout.coloured("What is that in English? ", 'cyan', True)).lower()
+    def translationQuestion(self, word, letter=None):
+        if self.exit is False:
+            if letter is not None: self.displayQuestionLetter(letter)
+            textIn = input(inout.coloured("What is {} in English? ".format(word.translation), 'cyan', True)).lower()
             if textIn == "exit":
-                inout.remove_history_items(questionNumber*3)
-                return
-            elif textIn == aSet.nouns[index].english:
+                self.exit = True
+            elif textIn == word.english:
                 print(inout.coloured("Correct!", 'green'))
-                self.score += 1 # Half point
+                self.score += 1
             else:
-                print(inout.coloured("Incorrect! The answer was " + aSet.nouns[index].english + "." + ".", 'red'))
+                print(inout.coloured("Incorrect! The answer was " + word.english + "." + ".", 'red'))
+            inout.remove_history_items(1)
 
-    def verbs(self, aSet): # At the moment, this is for past prticiples. A conjugation quiz will be added soon
-        deck = self.randomise(len(aSet.verbs))
+    def genderQuestion(self, noun, letter=None):
+        if self.exit is False:
+            if letter is not None: self.displayQuestionLetter(letter)
+            textIn = input(inout.coloured("What is the gender of '" + noun.translation + "'? ", 'cyan', True)).lower()
+            if textIn == 'exit':
+                self.exit = True
+            elif textIn == noun.gender:
+                print(inout.coloured("Correct!", 'green'))
+                self.score += 1
+            else:
+                print(inout.coloured("Incorrect! The answer was " + noun.gender + ".", 'red'))
+            inout.remove_history_items(1)
+
+    def pastParticipleQuestion(self, verb, letter=None):
+        if self.exit is False:
+            if letter is not None: self.displayQuestionLetter(letter)
+            textIn = input(inout.coloured("What is the past participle of '" + verb.translation + "'? ", 'cyan', True)).lower()
+            if textIn == 'exit':
+                self.exit = True
+            elif textIn == verb.pastParticiple:
+                print(inout.coloured("Correct!", 'green'))
+                self.score += 1
+            else:
+                print(inout.coloured("Incorrect! The answer was " + verb.pastParticiple + ".", 'red'))
+            inout.remove_history_items(1)
+
+    def auxiliaryVerbQuestion(self, verb, letter=None):
+        auxiliaryVerbs = ['haben', 'sein'] if verb.language == 'german' else ['avoir', 'être'] # Shift-AltGr-6 release e for ê
+        if self.exit is False:
+            if letter is not None: self.displayQuestionLetter(letter)
+            textIn = input(inout.coloured("Does '" + verb.pastParticiple + "' use " + auxiliaryVerbs[0] + " or " + auxiliaryVerbs[1] +"? ", 'cyan', True)).lower()
+            if textIn == 'exit':
+                self.exit = True
+            elif textIn == verb.auxVerb:
+                print(inout.coloured("Correct!", 'green'))
+                self.score += 1
+            else:
+                print(inout.coloured("Incorrect! The answer was " + verb.auxVerb + ".", 'red'))
+            inout.remove_history_items(1)
+
+    def nouns(self, aSet):
+        deck = self.randomise(len(aSet.nouns))
         numberOfQuestions = len(deck)
-        auxiliaryVerbs = ['haben', 'sein'] if aSet.language == 'german' else ['avoir', 'etre'] # Not very flexible, I know. Will update. 'ê' is intentionally left out.
 
-        while True:
+        while self.exit is False:
             try:
                 index = deck.pop()
                 questionNumber = numberOfQuestions - len(deck)
             except IndexError:
-                self.score = float(self.score/3) # 3 is the number of quesions for each verb
-                highestPossibleScore = str(len(aSet.verbs))
-                if self.score < 10:
-                    print(inout.coloured("Round over! Your score that round was " + '%.2g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
-                elif self.score < 100:
-                    print(inout.coloured("Round over! Your score that round was " + '%.3g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
-                elif self.score < 1000:
-                    print(inout.coloured("Round over! Your score that round was " + '%.4g'%(self.score) + " out of " + highestPossibleScore + ", " +'%0.4g'%(self.score/int(highestPossibleScore)*100) + "%.\n", 'cyan'))
-                self.score = 0
-                inout.remove_history_items(questionNumber*3)
+                self.displayScore(2, len(aSet.nouns))
                 return
 
             print(inout.coloured("Question " + str(questionNumber) + ":", 'cyan'))
-            textIn = input(inout.coloured("a) What is the past participle of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
-            if textIn == 'exit':
-                inout.remove_history_items(questionNumber*3-2)
-                return
-            elif textIn == aSet.verbs[index].pastParticiple:
-                print(inout.coloured("Correct!", 'green'))
-                self.score += 1 # 1 to avoid adding floats
-            else:
-                print(inout.coloured("Incorrect! The answer was " + aSet.verbs[index].pastParticiple + ".", 'red'))
+            self.translationQuestion(aSet.nouns[index], 'a')
 
-            textIn = input(inout.coloured("b) Does '" + aSet.verbs[index].pastParticiple + "' use " + auxiliaryVerbs[0] + " or " + auxiliaryVerbs[1] +"? ", 'cyan', True)).lower()
-            if textIn == 'exit':
-                inout.remove_history_items(questionNumber*3-1)
-                return
-            elif textIn == aSet.verbs[index].auxVerb:
-                print(inout.coloured("Correct!", 'green'))
-                self.score += 1
-            else:
-                print(inout.coloured("Incorrect! The answer was " + aSet.verbs[index].auxVerb + ".", 'red'))
-
-            textIn = input(inout.coloured("c) What is the english translation of '" + aSet.verbs[index].translation + "'? ", 'cyan', True)).lower()
-            if textIn == 'exit':
-                inout.remove_history_items(questionNumber*3)
-                return
-            elif textIn == aSet.verbs[index].english:
-                print(inout.coloured("Correct!", 'green'))
-                self.score += 1
-            else:
-                print(inout.coloured("Incorrect! The answer was " + aSet.verbs[index].english + ".", 'red'))
+            self.genderQuestion(aSet.nouns[index], 'b')
 
             print()
+
+        self.exit = False
+
+    def verbs(self, aSet): # At the moment, this is for past prticiples. A conjugation quiz will be added soon
+        deck = self.randomise(len(aSet.verbs))
+        numberOfQuestions = len(deck)
+
+        while self.exit is False:
+            try:
+                index = deck.pop()
+                questionNumber = numberOfQuestions - len(deck)
+            except IndexError:
+                self.displayScore(3, len(aSet.verbs))
+                return
+
+            print(inout.coloured("Question " + str(questionNumber) + ":", 'cyan'))
+            self.pastParticipleQuestion(aSet.verbs[index], 'a')
+
+            self.auxiliaryVerbQuestion(aSet.verbs[index], 'b')
+
+            self.translationQuestion(aSet.verbs[index], 'c')
+
+            print()
+
+        self.exit = False
