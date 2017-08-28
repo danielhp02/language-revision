@@ -80,7 +80,7 @@ class Quiz(object):
                 print(inout.coloured("Correct!", 'green'))
                 self.score += score
             else:
-                print(inout.coloured("Incorrect! The answer was " + word.english + "." + ".", 'red'))
+                print(inout.coloured("Incorrect! The answer was " + word.english + ".", 'red'))
             if len(textIn) > 0: inout.remove_history_items(1)
 
     def genderQuestion(self, noun, letter=None, score=1):
