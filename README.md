@@ -9,7 +9,8 @@ Navigate to the language-revision directory then run `python code/main.py`. If y
 Command | Explanation
 --------|------------
 `add word` | Follow the prompts to add a word.
-`quiz [language] [type] [topic]` | Initiate a quiz, eg. `quiz french nouns pets`.
+`quiz [type] [topic] [length]` | Initiate a quiz, eg. `quiz nouns pets`.
 `print [language] [topic]` | Print all the words in a set, eg. `print german food`.
+`help [command]` | Give a list of commands or help with one. eg. `help quiz`.
 `save` | Saves newly added words and sets.
 `exit` | Exits the program.
