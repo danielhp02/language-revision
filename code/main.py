@@ -155,6 +155,28 @@ def print_words_in_set(language, topic):
         for w in aSet.words:
             print(w.translation, '-', w.english)
 
+def help(command=None):
+    if command is None:
+        print("Commands:")
+        print(" - add word")
+        print(" - quiz")
+        print(" - print")
+        print(" - help")
+        print(" - save")
+        print(" - exit")
+        print("Enter help [command] to get info\non a specific command and its usage.")
+    elif command == 'quiz':
+        print("quiz")
+        print("Usage: quiz [type] [topic] [length]")
+        print("Description: Begin a quiz of type [type] and topic [topic].\nOptional argument [length] specifies the number of questions asked.")
+        print("Availible types:")
+        print(" - nouns")
+        print(" - verbs (past participles)")
+        print(" - vocab")
+        print("Availible topics:")
+        print(" - See 'print'")
+        print(" - Make your own! (see 'add word')")
+
 load_words()
 quiz = objects.Quiz()
 
@@ -178,11 +200,11 @@ try:
                 elif type == 'verb':
                     pastParticiple = input(inout.coloured("What is the past participle of this verb? ", 'magenta', True)).lower()
                     auxVerb = input(inout.coloured("What auxiliary verb does this verb use? ", 'magenta', True)).lower()
-                    inout.remove_history_items(6)
+                    inout.remove_history_items(7)
 
                     add_verb(english, language, translation, pastParticiple, auxVerb, topic)
                 elif type == 'adjective':
-                    inout.remove_history_items(4)
+                    inout.remove_history_items(5)
 
                     add_adjective(english, language, translation, topic)
 
@@ -207,6 +229,12 @@ try:
 
             elif action.split()[0] == 'print': # language, topic
                 print_words_in_set(action.split()[1], action.split()[2])
+
+            elif action.split()[0] == 'help':
+                if len(action.split()) == 2:
+                    help(action.split()[1])
+                else:
+                    help()
 
             elif action == 'save':
                 save_words()

@@ -1,303 +1,703 @@
 {
   "sets": [
     {
-      "language": "german",
       "topic": "liste1",
+      "language": "german",
       "words": [
         {
-          "auxVerb": "sein",
-          "english": "to happen",
           "pastParticiple": "geschehen",
-          "language": "german",
           "translation": "geschehen",
+          "english": "to happen",
+          "language": "german",
+          "auxVerb": "sein",
           "type": "verb"
         },
         {
-          "auxVerb": "haben",
-          "english": "to write",
           "pastParticiple": "geschrieben",
-          "language": "german",
           "translation": "schreiben",
+          "english": "to write",
+          "language": "german",
+          "auxVerb": "haben",
           "type": "verb"
         }
       ]
     },
     {
-      "language": "german",
       "topic": "gesundheit",
+      "language": "german",
       "words": [
         {
-          "gender": "n",
+          "translation": "knie",
           "english": "knee",
           "language": "german",
-          "translation": "knie",
+          "gender": "n",
           "type": "noun"
         },
         {
-          "auxVerb": "haben",
-          "english": "to break",
           "pastParticiple": "gebrochen",
-          "language": "german",
           "translation": "brechen",
+          "english": "to break",
+          "language": "german",
+          "auxVerb": "haben",
           "type": "verb"
         },
         {
+          "translation": "tot",
           "english": "dead",
           "language": "german",
-          "translation": "tot",
           "type": "adjective"
         },
         {
-          "gender": "m",
+          "translation": "koerperteil",
           "english": "body part",
           "language": "german",
-          "translation": "koerperteil",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "kopf",
           "english": "head",
           "language": "german",
-          "translation": "kopf",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "hals",
           "english": "neck",
           "language": "german",
-          "translation": "hals",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "mund",
           "english": "mouth",
           "language": "german",
-          "translation": "mund",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "zahn",
           "english": "tooth",
           "language": "german",
-          "translation": "zahn",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "arm",
           "english": "arm",
           "language": "german",
-          "translation": "arm",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "ellbogen",
           "english": "elbow",
           "language": "german",
-          "translation": "ellbogen",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "finger",
           "english": "finger",
           "language": "german",
-          "translation": "finger",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "busen",
           "english": "chest",
           "language": "german",
-          "translation": "busen",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "daumen",
           "english": "thumb",
           "language": "german",
-          "translation": "daumen",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "ruecken",
           "english": "back",
           "language": "german",
-          "translation": "ruecken",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "bauch",
           "english": "tummy",
           "language": "german",
-          "translation": "bauch",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "magen",
           "english": "stomache",
           "language": "german",
-          "translation": "magen",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "oberschenkel",
           "english": "thigh",
           "language": "german",
-          "translation": "oberschenkel",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "fuss",
           "english": "foot",
           "language": "german",
-          "translation": "fuss",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "knoechel",
           "english": "knuckle",
           "language": "german",
-          "translation": "knoechel",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "zeh",
           "english": "toe",
           "language": "german",
-          "translation": "zeh",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "knochen",
           "english": "bone",
           "language": "german",
-          "translation": "knochen",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "schmerz",
           "english": "pain",
           "language": "german",
-          "translation": "schmerz",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "herzinfarkt",
           "english": "heart attack",
           "language": "german",
-          "translation": "herzinfarkt",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "ausschlage",
           "english": "rash",
           "language": "german",
-          "translation": "ausschlage",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "durchfall",
           "english": "diarrhoea",
           "language": "german",
-          "translation": "durchfall",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "bluterguss",
           "english": "bruise",
           "language": "german",
-          "translation": "bluterguss",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "tod",
           "english": "death",
           "language": "german",
-          "translation": "tod",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "schnupfen",
           "english": "sniffles",
           "language": "german",
-          "translation": "schnupfen",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "m",
+          "translation": "patient",
           "english": "patient",
           "language": "german",
-          "translation": "patient",
+          "gender": "m",
           "type": "noun"
         },
         {
-          "gender": "f",
+          "translation": "kehle",
           "english": "throat",
           "language": "german",
-          "translation": "kehle",
+          "gender": "f",
           "type": "noun"
         },
         {
-          "gender": "f",
+          "translation": "lippe",
           "english": "lip",
           "language": "german",
-          "translation": "lippe",
+          "gender": "f",
           "type": "noun"
         },
         {
-          "gender": "f",
+          "translation": "nase",
           "english": "nose",
           "language": "german",
-          "translation": "nase",
+          "gender": "f",
           "type": "noun"
         },
         {
-          "gender": "n",
+          "translation": "auge",
           "english": "eye",
           "language": "german",
-          "translation": "auge",
+          "gender": "n",
           "type": "noun"
         },
         {
-          "gender": "n",
+          "translation": "kinn",
           "english": "chin",
           "language": "german",
-          "translation": "kinn",
+          "gender": "n",
           "type": "noun"
         },
         {
-          "gender": "n",
+          "translation": "haar",
           "english": "hair",
           "language": "german",
-          "translation": "haar",
+          "gender": "n",
           "type": "noun"
         },
         {
-          "gender": "n",
+          "translation": "bein",
           "english": "leg",
           "language": "german",
-          "translation": "bein",
+          "gender": "n",
           "type": "noun"
         },
         {
-          "gender": "n",
+          "translation": "blut",
           "english": "blood",
           "language": "german",
-          "translation": "blut",
+          "gender": "n",
           "type": "noun"
         },
         {
-          "gender": "f",
+          "translation": "hand",
           "english": "hand",
           "language": "german",
-          "translation": "hand",
+          "gender": "f",
           "type": "noun"
         },
         {
-          "gender": "f",
+          "translation": "schulter",
           "english": "shoulder",
           "language": "german",
-          "translation": "schulter",
+          "gender": "f",
           "type": "noun"
+        },
+        {
+          "translation": "brust",
+          "english": "breast",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "huefte",
+          "english": "hip",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "ferse",
+          "english": "heel",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "haut",
+          "english": "skin",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "krankheit",
+          "english": "disease",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "verletzung",
+          "english": "injury",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "zuckerkrankheit",
+          "english": "diabetes",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "allergie",
+          "english": "allergy",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "grippe",
+          "english": "flu",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "seekrankheit",
+          "english": "sea sickness",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "luftkrankheit",
+          "english": "air sickness",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "verstopfung",
+          "english": "constipation",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "verstauchung",
+          "english": "sprain",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "schnittwunde",
+          "english": "cut",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "schuerfwunde",
+          "english": "graze",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "patientin",
+          "english": "patient",
+          "language": "german",
+          "gender": "f",
+          "type": "noun"
+        },
+        {
+          "translation": "gesicht",
+          "english": "face",
+          "language": "german",
+          "gender": "n",
+          "type": "noun"
+        },
+        {
+          "translation": "ohr",
+          "english": "ear",
+          "language": "german",
+          "gender": "n",
+          "type": "noun"
+        },
+        {
+          "translation": "handgelenk",
+          "english": "wrist",
+          "language": "german",
+          "gender": "n",
+          "type": "noun"
+        },
+        {
+          "translation": "fussgelenk",
+          "english": "ankle",
+          "language": "german",
+          "gender": "n",
+          "type": "noun"
+        },
+        {
+          "translation": "herz",
+          "english": "heart",
+          "language": "german",
+          "gender": "n",
+          "type": "noun"
+        },
+        {
+          "translation": "fieber",
+          "english": "fever",
+          "language": "german",
+          "gender": "n",
+          "type": "noun"
+        },
+        {
+          "translation": "sodbrennen",
+          "english": "heartburn",
+          "language": "german",
+          "gender": "n",
+          "type": "noun"
+        },
+        {
+          "translation": "krankenhaus",
+          "english": "hospital",
+          "language": "german",
+          "gender": "n",
+          "type": "noun"
+        },
+        {
+          "pastParticiple": "wehgetan",
+          "translation": "wehtun",
+          "english": "to hurt",
+          "language": "german",
+          "auxVerb": "haben",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "sich erkaelten",
+          "english": "to catch a cold",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "erkaeltet sein",
+          "english": "to have a cold",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "verletzen",
+          "english": "to injure",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "husten",
+          "english": "to cough",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "niesen",
+          "english": "to sneeze",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "sich uebergeben",
+          "english": "to vomit",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "kotzen",
+          "english": "to puke",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "sterben",
+          "english": "to die",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "schwellen",
+          "english": "to swell",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "schmerzen",
+          "english": "to pain",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "allergisch sein",
+          "english": "to be allergic",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "bluten",
+          "english": "to bleed",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "pastParticiple": "-",
+          "translation": "zittern",
+          "english": "to shake",
+          "language": "german",
+          "auxVerb": "-",
+          "type": "verb"
+        },
+        {
+          "translation": "ansteckend",
+          "english": "contagious",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "blutig",
+          "english": "bloody",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "froh",
+          "english": "happy",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "geschwollen",
+          "english": "swollen",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "kraetzig",
+          "english": "itchy",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "langsam",
+          "english": "slow",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "muede",
+          "english": "tired",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "munter",
+          "english": "awake",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "puenktlich",
+          "english": "punctual",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "ruhig",
+          "english": "quiet",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "schmerzend",
+          "english": "painful",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "schwach",
+          "english": "weak",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "stressig",
+          "english": "stressful",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "schnell",
+          "english": "quick",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "traurig",
+          "english": "sad",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "unangenehm",
+          "english": "unpleasant",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "undankbar",
+          "english": "unthankful",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "dankbar",
+          "english": "thankful",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "verstaucht",
+          "english": "sprained",
+          "language": "german",
+          "type": "adjective"
+        },
+        {
+          "translation": "zaertlich",
+          "english": "affectionate",
+          "language": "german",
+          "type": "adjective"
         }
       ]
     }
