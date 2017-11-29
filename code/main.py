@@ -186,7 +186,11 @@ def help(command=None):
         print(" - German")
         print("Available topics:")
         print(" - Make your own! (see 'add word')")
-
+    elif command == 'add word':
+        print("add word")
+        print("Usage: add word")
+        print("Description: Begins asking the user a series of questions in order to add a word to the database.")
+    
 load_words()
 quiz = objects.Quiz()
 
@@ -243,6 +247,8 @@ try:
             elif action.split()[0] == 'help':
                 if len(action.split()) == 2:
                     help(action.split()[1])
+                elif len(action.split()) == 3:
+                    help(" ".join([action.split()[1], action.split()[2]))
                 else:
                     help()
 
